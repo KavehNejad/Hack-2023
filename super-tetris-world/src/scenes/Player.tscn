@@ -20,5 +20,9 @@ script = ExtResource( 2 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 
+[node name="AnimatedSprite2" type="AnimatedSprite" parent="."]
+position = Vector2( 2.5423, -63.7221 )
+frames = SubResource( 1 )
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
