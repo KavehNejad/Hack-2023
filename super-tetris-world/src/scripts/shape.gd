@@ -27,13 +27,11 @@ func _on_Timer_timeout():
 	add_to_grid()
 
 func _ready():
-	print(rotation)
 	add_to_grid()
 
 func _physics_process(delta):
 	if Global.game_mode == 'Platformer' || !current:
 		return
-	var should_print = false
 	#checks for stuff every frame
 	if Input.is_action_just_pressed("block_right"):
 		remove_from_grid()
@@ -41,14 +39,12 @@ func _physics_process(delta):
 		if overlaps():
 			position.x -= 64
 		add_to_grid()
-		should_print = true
 	if Input.is_action_just_pressed("block_left"):
 		remove_from_grid()
 		position.x -= 64
 		if overlaps():
 			position.x += 64
 		add_to_grid()
-		should_print = true
 	if Input.is_action_just_pressed("rotate_block"):
 		remove_from_grid()
 		rotate(deg2rad(90))
