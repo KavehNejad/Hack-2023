@@ -8,12 +8,14 @@ signal block_bottom #block touched bottom
 
 func set_info(shape_info):
 	layout = shape_info['layout']
+	var length = len(layout)
 	for y in range(len(shape_info['layout'])):
 		for x in range(len(shape_info['layout'][y])):
 			if shape_info['layout'][y][x] == 1:
 				var block = block_scene.instance()
-				block.position.x = 64 * x
-				block.position.y = 64 * y
+				block.position.x = 64 * x - int(length/2) * 64
+				block.position.y = 64 * y - int(length/2) * 64
+
 				add_child(block)
 				blocks.append(block)
 
