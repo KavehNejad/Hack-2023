@@ -4,6 +4,8 @@ var gravity
 var max_jump_velocity
 var min_jump_velocity
 
+signal player_wasted 
+
 var speed = 5 * Global.tile_size
 var max_jump_height = 2.25 * Global.tile_size
 var min_jump_height = 0.8 * Global.tile_size
@@ -22,10 +24,14 @@ func _physics_process(delta):
 	check_if_key_pressed(delta)
 	velocity.y += gravity * delta
 	move_and_slide(velocity, Vector2.UP)
+	if position.y > 850:
+		emit_signal("player_wasted")
 
 func check_if_key_pressed(delta):
 	if not Global.has_lost and not Global.game_paused:
 		move(delta)
+		
+
 
 func move(delta):
 	velocity.x = 0

@@ -3,6 +3,8 @@ extends Node
 var set_up_blocks_script = load("res://src/scripts/set_up_block_types.gd").new()
 var shape_scene = preload("res://src/scenes/shape.tscn")
 
+var player_checkpoint_position 
+
 signal game_mode_changed
 
 var grid = []
@@ -13,16 +15,29 @@ onready var player = get_node('Player')
 var current_shape
 
 func _ready():
+	player.connect("player_wasted", self, 'on_player_wasted')
 	shapes = set_up_blocks_script.get_block_tyoes()
 	create_grid()
 	spawn_shape()
 	current_shape.on_game_mode_changed()
 	player.get_node("Camera2D").current = true
 	
+	create_a_checkpoint()
+	
 	var all_cells = $TileMap.get_used_cells()
 	for cell in all_cells:
 		grid[cell.y + 1][cell.x + 1] = 1
 	
+func on_player_wasted(): 
+	revert_to_checkpoint()
+	
+
+func revert_to_checkpoint():
+	player.position = player_checkpoint_position
+
+func create_a_checkpoint():
+	player_checkpoint_position = player.position
+
 func spawn_shape():
 	if current_shape:
 		current_shape.get_node("Camera2D").current = false
