@@ -18,6 +18,10 @@ config/icon="res://assets/images/icon.png"
 
 Global="*res://src/scripts/Global.gd"
 
+[display]
+
+window/size/height=576
+
 [input]
 
 block_right={
