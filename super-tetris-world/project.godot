@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="super-tetris-world"
-config/icon="res://icon.png"
+config/icon="res://assets/images/icon.png"
 
 [physics]
 
