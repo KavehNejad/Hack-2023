@@ -4,6 +4,7 @@ var block_scene = preload("res://src/scenes/block.tscn")
 var blocks = []
 var current = true
 var layout = null
+signal block_bottom #block touched bottom
 
 func set_info(shape_info):
 	layout = shape_info['layout']
@@ -23,6 +24,9 @@ func _on_Timer_timeout():
 	position.y += 64
 	if overlaps():
 		position.y -= 64
+		if current:
+			emit_signal("block_bottom")
+
 		current = false
 	add_to_grid()
 

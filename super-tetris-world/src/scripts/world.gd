@@ -1,20 +1,30 @@
 extends Node
 
 var set_up_blocks_script = load("res://src/scripts/set_up_block_types.gd").new()
+var shape_scene = preload("res://src/scenes/shape.tscn")
 
 var grid = []
-
+var shapes 
 func _ready():
-	var shapes = set_up_blocks_script.get_block_tyoes()
+	shapes = set_up_blocks_script.get_block_tyoes()
 	create_grid()
-	shapes[1].position.x = 64 * 1 - 32
-	shapes[1].position.y = 64 * 4 - 32
-	add_child(shapes[1])
+	spawn_shape()
+	
 	var all_cells = $TileMap.get_used_cells()
 	for cell in all_cells:
 		grid[cell.y + 1][cell.x + 1] = 1
 	
-		
+func spawn_shape():
+	var shape = shape_scene.instance()
+	shape.set_info(shapes[1])
+	shape.position.x = 64 * 1 - 32
+	shape.position.y = 64 * 4 - 32
+	add_child(shape)
+	shape.connect("block_bottom",self, "on_block_touch_bottom")
+
+func on_block_touch_bottom():
+	spawn_shape()
+
 func _process(delta):
 	if Input.is_action_just_pressed("game_mode_switch"):
 		if Global.game_mode == 'Platformer':
