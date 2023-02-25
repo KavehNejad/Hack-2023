@@ -6,18 +6,27 @@ var shape_scene = preload("res://src/scenes/shape.tscn")
 signal game_mode_changed
 
 var grid = []
-var shapes 
+var shapes
+
+var player
+var current_shape
+
 func _ready():
 	shapes = set_up_blocks_script.get_block_tyoes()
 	create_grid()
 	spawn_shape()
+	player = $Player
 	
 	var all_cells = $TileMap.get_used_cells()
 	for cell in all_cells:
 		grid[cell.y + 1][cell.x + 1] = 1
 	
 func spawn_shape():
+	if current_shape:
+		current_shape.get_node("Camera2D").current = false
 	var shape = shape_scene.instance()
+	current_shape = shape
+	current_shape.get_node("Camera2D").current = true
 	shape.set_info(shapes[rand_range(0,len(shapes))])
 	shape.position.x = 64 * 5 - 32
 	shape.position.y = 64 * 1 - 32
@@ -32,8 +41,12 @@ func _process(delta):
 	if Input.is_action_just_pressed("game_mode_switch"):
 		if Global.game_mode == 'Platformer':
 			Global.game_mode = 'Tetris'
+			player.get_node("Camera2D").current = false
+			current_shape.get_node("Camera2D").current = true
 		else:
 			Global.game_mode = 'Platformer'
+			current_shape.get_node("Camera2D").current = false
+			player.get_node("Camera2D").current = true
 		emit_signal("game_mode_changed")
 
 func create_grid():
