@@ -12,9 +12,9 @@ func _ready():
 	add_child(shapes[1])
 
 func create_grid():
-	for y in range(100):
+	for y in range(10):
 		grid.append([])
-		for x in range(100):
+		for x in range(10):
 			grid[y].append(0)
 
 func get_block_index(x, y):
