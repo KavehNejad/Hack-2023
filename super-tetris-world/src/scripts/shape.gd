@@ -16,11 +16,10 @@ func set_info(shape_info):
 
 func _on_Timer_timeout():
 	remote_from_grid()
-	if would_overlap('down'):
-		current = false
-	else:
-		position.y += 64
-	add_to_grid()
+	position.y += 64
+	if overlaps():
+		position.y -= 64
+		current = true
 
 func _ready():
 	add_to_grid()
@@ -31,13 +30,15 @@ func _physics_process(delta):
 	#checks for stuff every frame
 	if Input.is_action_just_pressed("block_right"):
 		remote_from_grid()
-		if !would_overlap('right'):
-			position.x += 64
+		position.x += 64
+		if overlaps():
+			position.x -= 64
 		add_to_grid()
 	if Input.is_action_just_pressed("block_left"):
 		remote_from_grid()
-		if !would_overlap('left'):
-			position.x -= 64
+		position.x -= 64
+		if overlaps():
+			position.x += 64
 		add_to_grid()
 
 func remote_from_grid():
@@ -48,17 +49,9 @@ func add_to_grid():
 	for block in blocks:
 		get_parent().add_block(position.x + block.position.x, position.y + block.position.y)
 
-func would_overlap(direction):
-	var pos = position
-	if direction == 'down':
-		pos.y += 64
-	if direction == 'right':
-		pos.x += 64
-	if direction == 'left':
-		pos.x -= 64
-
+func overlaps():
 	for block in blocks:
-		var indexs = get_parent().get_block_index(pos.x + block.position.x, pos.y + block.position.y)
+		var indexs = get_parent().get_block_index(position.x + block.position.x, position.y + block.position.y)
 		if get_parent().get_block_by_index(indexs['x'], indexs['y']) == 1:
 			return true
 	return false
