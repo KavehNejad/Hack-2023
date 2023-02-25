@@ -11,7 +11,5 @@ func set_info(shape_info):
 				block.position.y = 64 * y
 				add_child(block)
 
-
-
 func _on_Timer_timeout():
-	print(1)
+	position.y += 64
