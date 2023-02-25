@@ -77,5 +77,6 @@ func overlaps():
 	for block in blocks:
 		var indexs = get_parent().get_block_index(block.global_position.x, block.global_position.y)
 		if get_parent().get_block_by_index(indexs['x'], indexs['y']) == 1:
+
 			return true
 	return false
