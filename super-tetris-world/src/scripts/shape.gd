@@ -15,9 +15,15 @@ func set_info(shape_info):
 				var block = block_scene.instance()
 				block.position.x = 64 * x - int(length/2) * 64
 				block.position.y = 64 * y - int(length/2) * 64
-
 				add_child(block)
 				blocks.append(block)
+
+func on_game_mode_changed():
+	if !current:
+		return
+	visible = !visible
+	for block in blocks:
+		block.get_node("CollisionShape2D").disabled = !block.get_node("CollisionShape2D").disabled
 
 func _on_Timer_timeout():
 	if Global.game_mode == 'Platformer':

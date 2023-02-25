@@ -3,6 +3,8 @@ extends Node
 var set_up_blocks_script = load("res://src/scripts/set_up_block_types.gd").new()
 var shape_scene = preload("res://src/scenes/shape.tscn")
 
+signal game_mode_changed
+
 var grid = []
 var shapes 
 func _ready():
@@ -21,6 +23,7 @@ func spawn_shape():
 	shape.position.y = 64 * 1 - 32
 	add_child(shape)
 	shape.connect("block_bottom",self, "on_block_touch_bottom")
+	connect("game_mode_changed", shape, "on_game_mode_changed")
 
 func on_block_touch_bottom():
 	spawn_shape()
@@ -31,6 +34,7 @@ func _process(delta):
 			Global.game_mode = 'Tetris'
 		else:
 			Global.game_mode = 'Platformer'
+		emit_signal("game_mode_changed")
 
 func create_grid():
 	for y in range(100):
