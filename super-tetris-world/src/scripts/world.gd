@@ -7,14 +7,18 @@ var grid = []
 func _ready():
 	var shapes = set_up_blocks_script.get_block_tyoes()
 	create_grid()
-	shapes[1].position.x = 64 * 1
-	shapes[1].position.y = 64 * 4
+	shapes[1].position.x = 64 * 1 - 32
+	shapes[1].position.y = 64 * 4 - 32
 	add_child(shapes[1])
+	var all_cells = $TileMap.get_used_cells()
+	for cell in all_cells:
+		grid[cell.y + 1][cell.x + 1] = 1
+
 
 func create_grid():
-	for y in range(10):
+	for y in range(100):
 		grid.append([])
-		for x in range(10):
+		for x in range(100):
 			grid[y].append(0)
 
 func get_block_index(x, y):
