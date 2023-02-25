@@ -31,11 +31,13 @@ func _physics_process(delta):
 	#checks for stuff every frame
 	if Input.is_action_just_pressed("block_right"):
 		remote_from_grid()
-		position.x += 64
+		if !would_overlap('right'):
+			position.x += 64
 		add_to_grid()
 	if Input.is_action_just_pressed("block_left"):
 		remote_from_grid()
-		position.x -= 64
+		if !would_overlap('left'):
+			position.x -= 64
 		add_to_grid()
 
 func remote_from_grid():
@@ -50,6 +52,11 @@ func would_overlap(direction):
 	var pos = position
 	if direction == 'down':
 		pos.y += 64
+	if direction == 'right':
+		pos.x += 64
+	if direction == 'left':
+		pos.x -= 64
+
 	for block in blocks:
 		var indexs = get_parent().get_block_index(pos.x + block.position.x, pos.y + block.position.y)
 		if get_parent().get_block_by_index(indexs['x'], indexs['y']) == 1:
