@@ -16,9 +16,9 @@ func _ready():
 	
 func spawn_shape():
 	var shape = shape_scene.instance()
-	shape.set_info(shapes[1])
-	shape.position.x = 64 * 1 - 32
-	shape.position.y = 64 * 4 - 32
+	shape.set_info(shapes[rand_range(0,len(shapes))])
+	shape.position.x = 64 * 5 - 32
+	shape.position.y = 64 * 1 - 32
 	add_child(shape)
 	shape.connect("block_bottom",self, "on_block_touch_bottom")
 
