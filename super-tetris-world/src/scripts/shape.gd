@@ -17,11 +17,13 @@ func set_info(shape_info):
 				blocks.append(block)
 
 func _on_Timer_timeout():
+	if Global.game_mode == 'Platformer':
+		return
 	remove_from_grid()
 	position.y += 64
 	if overlaps():
 		position.y -= 64
-		current = true
+		current = false
 	add_to_grid()
 
 func _ready():
@@ -29,7 +31,7 @@ func _ready():
 	add_to_grid()
 
 func _physics_process(delta):
-	if !current:
+	if Global.game_mode == 'Platformer' || !current:
 		return
 	var should_print = false
 	#checks for stuff every frame

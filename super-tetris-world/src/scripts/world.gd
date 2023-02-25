@@ -13,7 +13,14 @@ func _ready():
 	var all_cells = $TileMap.get_used_cells()
 	for cell in all_cells:
 		grid[cell.y + 1][cell.x + 1] = 1
-
+	
+		
+func _process(delta):
+	if Input.is_action_just_pressed("game_mode_switch"):
+		if Global.game_mode == 'Platformer':
+			Global.game_mode = 'Tetris'
+		else:
+			Global.game_mode = 'Platformer'
 
 func create_grid():
 	for y in range(100):

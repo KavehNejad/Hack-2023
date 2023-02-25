@@ -17,6 +17,8 @@ func _ready():
 	min_jump_velocity = -sqrt(2 * gravity * min_jump_height)
 
 func _physics_process(delta):
+	if Global.game_mode == 'Tetris':
+		return
 	check_if_key_pressed(delta)
 	velocity.y += gravity * delta
 	move_and_slide(velocity, Vector2.UP)
