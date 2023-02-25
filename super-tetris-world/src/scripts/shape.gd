@@ -13,3 +13,10 @@ func set_info(shape_info):
 
 func _on_Timer_timeout():
 	position.y += 64
+	
+func _physics_process(delta):
+	#checks for stuff every frame
+	if Input.is_action_just_pressed("block_right"):
+		position.x += 64
+	if Input.is_action_just_pressed("block_left"):
+		position.x -= 64
