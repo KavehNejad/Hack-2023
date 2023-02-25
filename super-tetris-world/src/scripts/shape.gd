@@ -4,6 +4,7 @@ var block_scene = preload("res://src/scenes/block.tscn")
 var blocks = []
 var current = true
 var layout = null
+var collision
 
 func set_info(shape_info):
 	layout = shape_info['layout']
