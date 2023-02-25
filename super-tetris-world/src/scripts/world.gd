@@ -17,6 +17,7 @@ func _ready():
 	create_grid()
 	spawn_shape()
 	current_shape.on_game_mode_changed()
+	player.get_node("Camera2D").current = true
 	
 	var all_cells = $TileMap.get_used_cells()
 	for cell in all_cells:
