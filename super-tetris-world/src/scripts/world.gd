@@ -5,6 +5,8 @@ var has_flag = false
 var set_up_blocks_script = load("res://src/scripts/set_up_block_types.gd").new()
 var shape_scene = preload("res://src/scenes/shape.tscn")
 
+export(bool) var is_demo = false
+
 var player_checkpoint_position 
 
 signal game_mode_changed
@@ -13,12 +15,34 @@ var grid = []
 var tile_set_grid = []
 var shapes
 
+var demo_block_index = -1
 var demo_shapes = [
 	{
 		"layout": [
 		  [1, 0, 0],
 		  [1, 0, 0],
 		  [1, 1, 0]
+		]
+	},
+	{
+		"layout": [
+		  [0, 1, 0],
+		  [0, 1, 0],
+		  [0, 1, 0]
+		]
+	},
+	{
+		"layout": [
+		  [0, 1, 0],
+		  [0, 1, 0],
+		  [0, 1, 0]
+		]
+	},
+	{
+		"layout": [
+		  [0, 1, 0],
+		  [0, 1, 0],
+		  [0, 1, 0]
 		]
 	},
 	{
@@ -65,12 +89,19 @@ func spawn_shape():
 	var player_x = get_block_index(player.position.x, 0)['x']
 	current_shape = shape
 	current_shape.get_node("Camera2D").current = true
-	shape.set_info(shapes[rand_range(0,len(shapes))])
+	shape.set_info(get_next_block())
 	shape.position.x = 64 * player_x - 32
 	shape.position.y = 64 * 1 - 32
 	add_child(shape)
 	shape.connect("block_bottom",self, "on_block_touch_bottom")
 	connect("game_mode_changed", shape, "on_game_mode_changed")
+
+func get_next_block():
+	if is_demo:
+		demo_block_index += 1
+		return demo_shapes[demo_block_index]
+	else:
+		return shapes[rand_range(0,len(shapes))]
 
 func on_block_touch_bottom():
 	spawn_shape()
