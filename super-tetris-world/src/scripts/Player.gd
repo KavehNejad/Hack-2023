@@ -25,7 +25,10 @@ func _physics_process(delta):
 	velocity.y += gravity * delta
 	move_and_slide(velocity, Vector2.UP)
 	if position.y > 850:
-		emit_signal("player_wasted")
+		die()
+
+func die():
+	emit_signal("player_wasted")
 
 func check_if_key_pressed(delta):
 	if not Global.has_lost and not Global.game_paused:
