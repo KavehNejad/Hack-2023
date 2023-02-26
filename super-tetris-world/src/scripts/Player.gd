@@ -15,6 +15,8 @@ var velocity = Vector2.ZERO
 var can_kill = true
 
 func _ready():
+	if !get_parent().is_demo:
+		$Camera2D/CanvasLayer.queue_free()
 	gravity = 2 * max_jump_height / pow(jump_duration, 2)
 	max_jump_velocity = -sqrt(2 * gravity * max_jump_height)
 	min_jump_velocity = -sqrt(2 * gravity * min_jump_height)

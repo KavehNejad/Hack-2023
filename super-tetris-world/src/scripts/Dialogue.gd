@@ -11,13 +11,13 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if Input.is_action_just_pressed("skip"):
+	if Input.is_action_just_pressed("skip") && Global.is_demo:
 		if current_type == "long":
 			next()
 		elif current_type == "random":
 			print("destroying dialogue")
 			queue_free()
-	
+
 
 func start_speak (textInput, type):
 	text = textInput

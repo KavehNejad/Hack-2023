@@ -8,7 +8,7 @@ var set_up_blocks_script = load("res://src/scripts/set_up_block_types.gd").new()
 var shape_scene = preload("res://src/scenes/shape.tscn")
 var tetris_dialogue_done = false
 
-export(bool) var is_demo = false	
+export(bool) var is_demo = false
 
 var player_checkpoint_position 
 
@@ -95,6 +95,7 @@ func load_text(path):
 	return textArray
 
 func _ready():
+	Global.is_demo = is_demo
 	if is_last:
 		return
 	

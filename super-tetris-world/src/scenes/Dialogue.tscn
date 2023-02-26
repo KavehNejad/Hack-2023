@@ -5,20 +5,20 @@
 [ext_resource path="res://assets/images/mario.png" type="Texture" id=3]
 [ext_resource path="res://assets/fonts/PixelFont.ttf" type="DynamicFontData" id=4]
 
-[sub_resource type="DynamicFont" id=3]
-size = 35
-font_data = ExtResource( 4 )
-
-[sub_resource type="Theme" id=4]
-default_font = SubResource( 3 )
-
 [sub_resource type="DynamicFont" id=1]
-size = 50
-outline_color = Color( 0, 0, 0, 1 )
+size = 35
 font_data = ExtResource( 4 )
 
 [sub_resource type="Theme" id=2]
 default_font = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 50
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 4 )
+
+[sub_resource type="Theme" id=4]
+default_font = SubResource( 3 )
 
 [sub_resource type="Animation" id=5]
 resource_name = "typewriter"
@@ -73,7 +73,7 @@ margin_left = 88.9763
 margin_top = 439.609
 margin_right = 737.976
 margin_bottom = 592.609
-theme = SubResource( 4 )
+theme = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "
@@ -88,7 +88,7 @@ margin_left = 625.694
 margin_top = 313.609
 margin_right = 1289.69
 margin_bottom = 439.609
-theme = SubResource( 4 )
+theme = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Press SPACE to skip"
 autowrap = true
@@ -101,7 +101,7 @@ margin_left = 88.9763
 margin_top = 392.0
 margin_right = 395.976
 margin_bottom = 457.0
-theme = SubResource( 2 )
+theme = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Mario"
 __meta__ = {
