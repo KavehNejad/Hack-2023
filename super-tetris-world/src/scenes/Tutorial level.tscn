@@ -24,3 +24,15 @@ position = Vector2( 3233.35, 477.658 )
 
 [node name="exit_portal" parent="." instance=ExtResource( 5 )]
 position = Vector2( 4510.48, 473.122 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="time" type="Label" parent="CanvasLayer"]
+margin_left = 871.0
+margin_top = 6.0
+margin_right = 921.0
+margin_bottom = 34.0
+text = "TIME: "
+__meta__ = {
+"_edit_use_anchors_": false
+}

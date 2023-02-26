@@ -12,6 +12,8 @@ signal game_mode_changed
 var grid = []
 var shapes
 
+var time = 0
+
 onready var player = get_node('Player')
 
 var current_shape
@@ -58,6 +60,8 @@ func on_block_touch_bottom():
 	spawn_shape()
 
 func _process(delta):
+	time += delta
+	$CanvasLayer/time.set_text("Time: " + str(stepify(time, 0.01)))
 	if Input.is_action_just_pressed("game_mode_switch"):
 		if Global.game_mode == 'Platformer':
 			Global.game_mode = 'Tetris'

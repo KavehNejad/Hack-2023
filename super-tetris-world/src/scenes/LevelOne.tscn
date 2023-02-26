@@ -23,3 +23,15 @@ needs_flag = true
 
 [node name="flag" parent="." instance=ExtResource( 5 )]
 position = Vector2( 2018.05, 158.367 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="time" type="Label" parent="CanvasLayer"]
+margin_left = 871.0
+margin_top = 6.0
+margin_right = 921.0
+margin_bottom = 34.0
+text = "TIME: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
