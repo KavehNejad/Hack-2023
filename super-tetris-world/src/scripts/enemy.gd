@@ -16,3 +16,4 @@ func _process(delta):
 		if colision.collider.name == "Player":
 			colision.collider.die()
 		move_right = !move_right
+

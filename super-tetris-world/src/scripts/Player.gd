@@ -24,6 +24,10 @@ func _physics_process(delta):
 	check_if_key_pressed(delta)
 	velocity.y += gravity * delta
 	move_and_slide(velocity, Vector2.UP)
+	for i in get_slide_count():
+		if get_slide_collision(i).collider.is_in_group("enemy") && velocity.y > 0:
+			get_slide_collision(i).collider.queue_free()
+			velocity.y = max_jump_velocity
 	if position.y > 850:
 		die()
 

@@ -68,6 +68,10 @@ func _physics_process(delta):
 		if overlaps():
 			rotate(-deg2rad(90))
 		add_to_grid()
+	
+	if position.y > 700:
+		emit_signal("block_bottom")
+		queue_free()
 
 
 func remove_from_grid():
