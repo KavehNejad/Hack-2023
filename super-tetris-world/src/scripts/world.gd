@@ -82,7 +82,7 @@ func delete_lines():
 				if start_of_line && x - start_of_line == 5:
 					for i in range(start_of_line, x):
 						grid[y][i].queue_free()
-						grid[y][i].get_parent().remove_block(grid[y][x])
+						grid[y][i].get_parent().remove_block(grid[y][i])
 						grid[y][i] = null
 					
 				elif start_of_line == null:
