@@ -30,8 +30,6 @@ func _physics_process(delta):
 func check_if_key_pressed(delta):
 	if not Global.has_lost and not Global.game_paused:
 		move(delta)
-		
-
 
 func move(delta):
 	velocity.x = 0
