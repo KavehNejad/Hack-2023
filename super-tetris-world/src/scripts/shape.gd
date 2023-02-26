@@ -26,6 +26,9 @@ func on_game_mode_changed():
 		block.get_node("CollisionShape2D").disabled = !block.get_node("CollisionShape2D").disabled
 
 func _on_Timer_timeout():
+	fall_down()
+
+func fall_down():
 	if Global.game_mode == 'Platformer':
 		return
 	remove_from_grid()
@@ -57,6 +60,8 @@ func _physics_process(delta):
 		if overlaps():
 			position.x += 64
 		add_to_grid()
+	if Input.is_action_just_pressed("block_down"):
+		fall_down()
 	if Input.is_action_just_pressed("rotate_block"):
 		remove_from_grid()
 		rotate(deg2rad(90))
@@ -77,6 +82,5 @@ func overlaps():
 	for block in blocks:
 		var indexs = get_parent().get_block_index(block.global_position.x, block.global_position.y)
 		if get_parent().get_block_by_index(indexs['x'], indexs['y']) == 1:
-
 			return true
 	return false
