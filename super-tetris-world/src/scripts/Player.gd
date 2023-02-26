@@ -40,6 +40,9 @@ func _physics_process(delta):
 	if (velocity.x == 0):
 		$AnimatedSprite.stop()
 		$AnimatedSprite.frame = 0
+		$AnimatedSprite.play("walking")
+	if (velocity.y < 0):
+		$AnimatedSprite.play("jump")
 
 func die():
 	emit_signal("player_wasted")
