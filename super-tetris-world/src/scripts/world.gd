@@ -99,6 +99,8 @@ func spawn_shape():
 func get_next_block():
 	if is_demo:
 		demo_block_index += 1
+		if demo_block_index >= len(demo_shapes):
+			demo_block_index = 0
 		return demo_shapes[demo_block_index]
 	else:
 		return shapes[rand_range(0,len(shapes))]
@@ -114,11 +116,13 @@ func _process(delta):
 			Global.game_mode = 'Tetris'
 			player.get_node("Camera2D").current = false
 			spawn_shape()
+			$AudioStreamPlayer2D.play()
 		else:
 			Global.game_mode = 'Platformer'
 			player.get_node("Camera2D").current = true
 			current_shape.delete()
 			current_shape = null
+			$AudioStreamPlayer2D.stop()
 		emit_signal("game_mode_changed")
 	delete_lines()
 

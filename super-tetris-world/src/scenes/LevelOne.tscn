@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/tilesets/default.tres" type="TileSet" id=1]
 [ext_resource path="res://src/scenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/scripts/world.gd" type="Script" id=3]
 [ext_resource path="res://src/scenes/exit_portal.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/scenes/flag.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/audio/tetris_theme.mp3" type="AudioStream" id=6]
 
 [node name="LevelOne" type="Node"]
 script = ExtResource( 3 )
@@ -35,3 +36,6 @@ text = "TIME: "
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
