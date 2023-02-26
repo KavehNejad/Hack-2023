@@ -73,18 +73,23 @@ func _physics_process(delta):
 		emit_signal("block_bottom")
 		queue_free()
 
+func remove_block(block):
+	blocks.erase(block)
 
 func remove_from_grid():
 	for block in blocks:
-		get_parent().remote_block(block.global_position.x, block.global_position.y)
+		if is_instance_valid(block):
+			get_parent().remove_block(block.global_position.x, block.global_position.y)
 
 func add_to_grid():
 	for block in blocks:
-		get_parent().add_block(block.global_position.x, block.global_position.y)
+		if is_instance_valid(block):
+			get_parent().add_block(block.global_position.x, block.global_position.y, block)
 
 func overlaps():
 	for block in blocks:
-		var indexs = get_parent().get_block_index(block.global_position.x, block.global_position.y)
-		if get_parent().get_block_by_index(indexs['x'], indexs['y']) == 1:
-			return true
+		if is_instance_valid(block):
+			var indexs = get_parent().get_block_index(block.global_position.x, block.global_position.y)
+			if get_parent().get_block_by_index(indexs['x'], indexs['y']):
+				return true
 	return false

@@ -10,6 +10,7 @@ var player_checkpoint_position
 signal game_mode_changed
 
 var grid = []
+var tile_set_grid = []
 var shapes
 
 var time = 0
@@ -31,10 +32,10 @@ func _ready():
 	var all_cells = $TileMap.get_used_cells()
 	for cell in all_cells:
 		grid[cell.y + 1][cell.x + 1] = 1
-	
+		tile_set_grid[cell.y + 1][cell.x + 1] = 1
+
 func on_player_wasted(): 
 	revert_to_checkpoint()
-	
 
 func revert_to_checkpoint():
 	player.position = player_checkpoint_position
@@ -72,12 +73,32 @@ func _process(delta):
 			current_shape.get_node("Camera2D").current = false
 			player.get_node("Camera2D").current = true
 		emit_signal("game_mode_changed")
+	delete_lines()
+
+func delete_lines():
+	var start_of_line = null
+	for y in range(100):
+		for x in range(1000):
+			if grid[y][x] && tile_set_grid[y][x] == 0 && !grid[y][x].get_parent().current:
+				if start_of_line && x - start_of_line == 5:
+					for i in range(start_of_line, x):
+						grid[y][i].queue_free()
+						grid[y][i].get_parent().remove_block(grid[y][x])
+						grid[y][i] = null
+					
+				elif start_of_line == null:
+					start_of_line = x
+			else:
+				start_of_line = null
+
 
 func create_grid():
 	for y in range(100):
 		grid.append([])
-		for x in range(10000):
-			grid[y].append(0)
+		tile_set_grid.append([])
+		for x in range(1000):
+			grid[y].append(null)
+			tile_set_grid[y].append(0)
 
 func get_block_index(x, y):
 	return { 'x': round(x / 64), 'y': round(y / 64) }
@@ -85,10 +106,10 @@ func get_block_index(x, y):
 func get_block_by_index(x, y):
 	return grid[y][x]
 
-func add_block(x, y):
+func add_block(x, y, block):
 	var indexs = get_block_index(x, y)
-	grid[indexs['y']][indexs['x']] = 1
+	grid[indexs['y']][indexs['x']] = block
 
-func remote_block(x, y):
+func remove_block(x, y):
 	var indexs = get_block_index(x, y)
-	grid[indexs['y']][indexs['x']] = 0
+	grid[indexs['y']][indexs['x']] = null
