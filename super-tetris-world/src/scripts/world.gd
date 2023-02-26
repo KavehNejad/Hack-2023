@@ -61,6 +61,7 @@ onready var player = get_node('Player')
 var current_shape
 
 func _ready():
+	VisualServer.set_default_clear_color(Color("#2596be"))
 	player.connect("player_wasted", self, 'on_player_wasted')
 	shapes = set_up_blocks_script.get_block_tyoes()
 	create_grid()
@@ -117,12 +118,14 @@ func _process(delta):
 			player.get_node("Camera2D").current = false
 			spawn_shape()
 			$AudioStreamPlayer2D.play()
+			VisualServer.set_default_clear_color(Color("#000000"))
 		else:
 			Global.game_mode = 'Platformer'
 			player.get_node("Camera2D").current = true
 			current_shape.delete()
 			current_shape = null
 			$AudioStreamPlayer2D.stop()
+			VisualServer.set_default_clear_color(Color("#2596be"))
 		emit_signal("game_mode_changed")
 	delete_lines()
 
