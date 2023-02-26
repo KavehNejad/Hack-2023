@@ -1,11 +1,14 @@
 extends Node
 
+const DIALOGUE = preload("res://src/scenes/Dialogue.tscn")
+
 var has_flag = false
 
 var set_up_blocks_script = load("res://src/scripts/set_up_block_types.gd").new()
 var shape_scene = preload("res://src/scenes/shape.tscn")
+var tetris_dialogue_done = false
 
-export(bool) var is_demo = false
+export(bool) var is_demo = false	
 
 var player_checkpoint_position 
 
@@ -15,12 +18,14 @@ var grid = []
 var tile_set_grid = []
 var shapes
 
+var dialogue_displayed = false
+
 var demo_block_index = -1
 var demo_shapes = [
 	{
 		"layout": [
-		  [1, 0, 0],
-		  [1, 0, 0],
+		  [0, 1, 0],
+		  [0, 1, 0],
 		  [1, 1, 0]
 		],
 		"colour": "#00FFFF"
@@ -74,15 +79,6 @@ var demo_shapes = [
 	}
 ]
 
-var mario_index = -1
-var mario_text = [
-	"Its a me mario",
-	"enter tetris",
-	"tetris out of hole, \n if you dont like the block press e",
-	"tetris over spikes",
-	"You can jump on to kill"
-]
-
 var time = 0
 
 onready var player = get_node('Player')
@@ -90,11 +86,23 @@ onready var player = get_node('Player')
 var current_shape
 export(bool) var is_last = false
 
+func load_text(path):
+	var file = File.new()
+	file.open(path, File.READ)
+	var textString = file.get_as_text()
+	file.close()
+	var textArray= str2var(textString)
+	return textArray
+
 func _ready():
 	if is_last:
 		return
-	if is_demo:
-		next_text()
+	
+	if (is_demo):
+		var intro_text = load_text("res://assets/text/intro.txt")
+		$Player/Camera2D/CanvasLayer/Dialogue.start_speak(intro_text, "long")
+		dialogue_displayed = true
+
 	VisualServer.set_default_clear_color(Color("#2596be"))
 	player.connect("player_wasted", self, 'on_player_wasted')
 	shapes = set_up_blocks_script.get_block_tyoes()
@@ -148,8 +156,7 @@ func _process(delta):
 		return
 	time += delta
 	$CanvasLayer/time.set_text("Time: " + str(stepify(time, 0.01)))
-	if Input.is_action_just_pressed("ui_accept"):
-		$CanvasLayer/mario_text.set_text("")
+	
 	if Input.is_action_just_pressed("game_mode_switch"):
 		if Global.game_mode == 'Platformer':
 			Global.game_mode = 'Tetris'
@@ -166,14 +173,14 @@ func _process(delta):
 			VisualServer.set_default_clear_color(Color("#2596be"))
 		emit_signal("game_mode_changed")
 	delete_lines()
+	if (is_demo):
+		if (dialogue_displayed == true) && (get_node_or_null("Player/Camera2D/Dialogue") == null):
+			dialogue_removed()
 
-func next_text():
-	mario_index += 1
-	if mario_index >= len(mario_text):
-		$CanvasLayer/mario_text.set_text("")
-		return
-	$CanvasLayer/mario_text.set_text(mario_text[mario_index])
-
+func dialogue_removed():
+	dialogue_displayed = false
+	$fade_text.play("fade_text")
+		
 func delete_lines():
 	var start_of_line = null
 	for y in range(100):
@@ -211,3 +218,13 @@ func add_block(x, y, block):
 func remove_block(x, y):
 	var indexs = get_block_index(x, y)
 	grid[indexs['y']][indexs['x']] = null
+
+
+func _on_tutorial_enter_body_entered(body):
+	if (!tetris_dialogue_done):
+		var dialogue_instance = DIALOGUE.instance()
+		dialogue_displayed = true
+		$Player/Camera2D/CanvasLayer.add_child(dialogue_instance)
+		var text = load_text("res://assets/text/tetris.txt")
+		$Player/Camera2D/CanvasLayer/Dialogue.start_speak(text, "long")
+		tetris_dialogue_done = true

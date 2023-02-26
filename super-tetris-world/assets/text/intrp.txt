@@ -1,0 +1,4 @@
+[
+["Oh another platformer, \nhow original...", 1], 
+["Anyways, it's a me, Mario! Johnie Peach should be somewhere to the right, good luck...", 2]
+]
