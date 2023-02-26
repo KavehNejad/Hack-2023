@@ -81,8 +81,11 @@ var time = 0
 onready var player = get_node('Player')
 
 var current_shape
+export(bool) var is_last = false
 
 func _ready():
+	if is_last:
+		return
 	if is_demo:
 		next_text()
 	VisualServer.set_default_clear_color(Color("#2596be"))
@@ -134,6 +137,8 @@ func on_block_touch_bottom():
 	spawn_shape()
 
 func _process(delta):
+	if is_last:
+		return
 	time += delta
 	$CanvasLayer/time.set_text("Time: " + str(stepify(time, 0.01)))
 	if Input.is_action_just_pressed("ui_accept"):
