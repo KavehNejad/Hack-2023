@@ -1,5 +1,7 @@
 extends Node
 
+var has_flag = false
+
 var set_up_blocks_script = load("res://src/scripts/set_up_block_types.gd").new()
 var shape_scene = preload("res://src/scenes/shape.tscn")
 
