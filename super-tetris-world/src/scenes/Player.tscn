@@ -30,8 +30,3 @@ shape = SubResource( 2 )
 limit_left = 0
 limit_top = 0
 limit_bottom = 576
-
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 2 )
