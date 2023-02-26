@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://assets/tilesets/default.tres" type="TileSet" id=1]
 [ext_resource path="res://src/scenes/Player.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://src/scenes/enemy.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/audio/tetris_theme.mp3" type="AudioStream" id=7]
 [ext_resource path="res://src/scenes/spikes.tscn" type="PackedScene" id=8]
+[ext_resource path="res://src/scenes/tutorial_enter.tscn" type="PackedScene" id=9]
 
 [node name="Tutorial level" type="Node"]
 script = ExtResource( 3 )
@@ -17,7 +18,7 @@ is_demo = true
 position = Vector2( 416, 480 )
 
 [node name="enemy" parent="." instance=ExtResource( 6 )]
-position = Vector2( 4547.43, 333.138 )
+position = Vector2( 4546.02, 351.523 )
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2( 1, 0 )
@@ -44,8 +45,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="mario_text" type="Label" parent="CanvasLayer"]
+margin_left = 733.473
+margin_top = 365.373
+margin_right = 902.473
+margin_bottom = 421.373
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 7 )
+max_distance = 2e+09
 
 [node name="spikes4" parent="." instance=ExtResource( 8 )]
 position = Vector2( 3947.22, 495.178 )
@@ -70,3 +81,48 @@ position = Vector2( 4076.93, 496.926 )
 
 [node name="spikes8" parent="." instance=ExtResource( 8 )]
 position = Vector2( 4198.86, 497.767 )
+
+[node name="tutorial_enter" parent="." instance=ExtResource( 9 )]
+position = Vector2( 2184.31, 390.617 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 1025.73
+margin_top = 338.593
+margin_right = 1229.73
+margin_bottom = 404.593
+rect_pivot_offset = Vector2( 154.006, -8.01779 )
+text = "Jump with up"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="."]
+margin_left = 1622.88
+margin_top = 336.348
+margin_right = 1826.88
+margin_bottom = 402.348
+rect_pivot_offset = Vector2( 154.006, -8.01779 )
+text = "jump again"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="."]
+margin_left = 2727.39
+margin_top = 84.9163
+margin_right = 2931.39
+margin_bottom = 150.916
+rect_pivot_offset = Vector2( 154.006, -8.01779 )
+text = "check point"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="tutorial_enter2" parent="." instance=ExtResource( 9 )]
+position = Vector2( 3335.96, 395.107 )
+
+[node name="tutorial_enter3" parent="." instance=ExtResource( 9 )]
+position = Vector2( 3619.94, 197.553 )
+
+[node name="tutorial_enter4" parent="." instance=ExtResource( 9 )]
+position = Vector2( 4280.38, 207.453 )

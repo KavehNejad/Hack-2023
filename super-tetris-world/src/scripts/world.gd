@@ -26,9 +26,22 @@ var demo_shapes = [
 	},
 	{
 		"layout": [
+		  [1, 0, 0],
+		  [1, 0, 0],
+		  [1, 1, 0]
+		]
+	},
+	{
+		"layout": [
 		  [0, 1, 0],
 		  [0, 1, 0],
 		  [0, 1, 0]
+		]
+	},
+	{
+		"layout": [
+		  [1, 1, 0],
+		  [1, 1, 0]
 		]
 	},
 	{
@@ -54,6 +67,15 @@ var demo_shapes = [
 	}
 ]
 
+var mario_index = -1
+var mario_text = [
+	"Its a me mario",
+	"enter tetris",
+	"tetris out of hole, \n if you dont like the block press e",
+	"tetris over spikes",
+	"You can jump on to kill"
+]
+
 var time = 0
 
 onready var player = get_node('Player')
@@ -61,6 +83,8 @@ onready var player = get_node('Player')
 var current_shape
 
 func _ready():
+	if is_demo:
+		next_text()
 	VisualServer.set_default_clear_color(Color("#2596be"))
 	player.connect("player_wasted", self, 'on_player_wasted')
 	shapes = set_up_blocks_script.get_block_tyoes()
@@ -112,6 +136,8 @@ func on_block_touch_bottom():
 func _process(delta):
 	time += delta
 	$CanvasLayer/time.set_text("Time: " + str(stepify(time, 0.01)))
+	if Input.is_action_just_pressed("ui_accept"):
+		$CanvasLayer/mario_text.set_text("")
 	if Input.is_action_just_pressed("game_mode_switch"):
 		if Global.game_mode == 'Platformer':
 			Global.game_mode = 'Tetris'
@@ -128,6 +154,13 @@ func _process(delta):
 			VisualServer.set_default_clear_color(Color("#2596be"))
 		emit_signal("game_mode_changed")
 	delete_lines()
+
+func next_text():
+	mario_index += 1
+	if mario_index >= len(mario_text):
+		$CanvasLayer/mario_text.set_text("")
+		return
+	$CanvasLayer/mario_text.set_text(mario_text[mario_index])
 
 func delete_lines():
 	var start_of_line = null
