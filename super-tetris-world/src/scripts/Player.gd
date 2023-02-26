@@ -36,6 +36,10 @@ func _physics_process(delta):
 		$Timer.start()
 	if position.y > 850:
 		die()
+	
+	if (velocity.x == 0):
+		$AnimatedSprite.stop()
+		$AnimatedSprite.frame = 0
 
 func die():
 	emit_signal("player_wasted")
@@ -52,8 +56,12 @@ func move(delta):
 		velocity.y = min_jump_velocity
 	if Input.is_action_pressed("right"):
 		velocity.x += speed
+		$AnimatedSprite.flip_h = false
+		$AnimatedSprite.play("walking")
 	if Input.is_action_pressed("left"):
 		velocity.x -= speed
+		$AnimatedSprite.flip_h = true
+		$AnimatedSprite.play("walking")
 
 
 func _on_Timer_timeout():
