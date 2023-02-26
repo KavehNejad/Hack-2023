@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/tilesets/default.tres" type="TileSet" id=1]
 [ext_resource path="res://src/scenes/Player.tscn" type="PackedScene" id=2]
@@ -9,13 +9,44 @@
 [ext_resource path="res://assets/audio/tetris_theme.mp3" type="AudioStream" id=7]
 [ext_resource path="res://src/scenes/spikes.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/scenes/tutorial_enter.tscn" type="PackedScene" id=9]
+[ext_resource path="res://assets/fonts/PixelFont.ttf" type="DynamicFontData" id=10]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 10 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "fade_text"
+tracks/0/type = "value"
+tracks/0/path = NodePath("text-left-right/left-right:custom_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("text-left-right/left-right2:custom_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="Tutorial level" type="Node"]
 script = ExtResource( 3 )
 is_demo = true
-
-[node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 416, 480 )
 
 [node name="enemy" parent="." instance=ExtResource( 6 )]
 position = Vector2( 4546.02, 351.523 )
@@ -41,15 +72,6 @@ margin_top = 6.0
 margin_right = 921.0
 margin_bottom = 34.0
 text = "TIME: "
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="mario_text" type="Label" parent="CanvasLayer"]
-margin_left = 733.473
-margin_top = 365.373
-margin_right = 902.473
-margin_bottom = 421.373
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -82,47 +104,149 @@ position = Vector2( 4076.93, 496.926 )
 [node name="spikes8" parent="." instance=ExtResource( 8 )]
 position = Vector2( 4198.86, 497.767 )
 
-[node name="tutorial_enter" parent="." instance=ExtResource( 9 )]
-position = Vector2( 2184.31, 390.617 )
+[node name="tutorial_enter" parent="." groups=[
+"tetris-message",
+] instance=ExtResource( 9 )]
+position = Vector2( 2016, 395 )
 
-[node name="Label" type="Label" parent="."]
-margin_left = 1025.73
-margin_top = 338.593
-margin_right = 1229.73
-margin_bottom = 404.593
+[node name="text-left-right" type="Node" parent="."]
+
+[node name="left-right" type="Label" parent="text-left-right"]
+margin_left = 296.0
+margin_top = 312.0
+margin_right = 632.0
+margin_bottom = 378.0
 rect_pivot_offset = Vector2( 154.006, -8.01779 )
-text = "Jump with up"
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 0 )
+text = "Move LEFT and RIGHT by using the arrow keys"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label2" type="Label" parent="."]
-margin_left = 1622.88
-margin_top = 336.348
-margin_right = 1826.88
-margin_bottom = 402.348
+[node name="left-right2" type="Label" parent="text-left-right"]
+margin_left = 296.0
+margin_top = 328.0
+margin_right = 632.0
+margin_bottom = 411.0
 rect_pivot_offset = Vector2( 154.006, -8.01779 )
-text = "jump again"
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 0 )
+text = "<-  ->
+"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label3" type="Label" parent="."]
-margin_left = 2727.39
-margin_top = 84.9163
-margin_right = 2931.39
-margin_bottom = 150.916
+[node name="text-jumping-ones" type="Node" parent="."]
+
+[node name="jump-over2" type="Label" parent="text-jumping-ones"]
+margin_left = 1184.0
+margin_top = 255.658
+margin_right = 1520.0
+margin_bottom = 338.658
 rect_pivot_offset = Vector2( 154.006, -8.01779 )
-text = "check point"
+custom_fonts/font = SubResource( 2 )
+text = "use the UP arrow to JUMP
+over blocks"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="jump-over" type="Label" parent="text-jumping-ones"]
+margin_left = 1664.0
+margin_top = 303.658
+margin_right = 2000.0
+margin_bottom = 386.658
+rect_pivot_offset = Vector2( 154.006, -8.01779 )
+custom_fonts/font = SubResource( 2 )
+text = "use jumping to avoid falling into the pits
+ 
+"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text-checkpoint" type="Label" parent="."]
+margin_left = 2656.0
+margin_top = 104.0
+margin_right = 2992.0
+margin_bottom = 187.0
+rect_pivot_offset = Vector2( 154.006, -8.01779 )
+custom_fonts/font = SubResource( 2 )
+text = "use CHECKPOINTS to save your progress
+ 
+"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text-disgard" type="Label" parent="."]
+margin_left = 3240.0
+margin_top = 352.0
+margin_right = 3576.0
+margin_bottom = 435.0
+rect_pivot_offset = Vector2( 154.006, -8.01779 )
+custom_fonts/font = SubResource( 2 )
+text = "use E to discard blocks
+ 
+"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text-bridge" type="Label" parent="."]
+margin_left = 3456.0
+margin_top = 56.0
+margin_right = 3865.0
+margin_bottom = 205.0
+rect_pivot_offset = Vector2( 154.006, -8.01779 )
+custom_fonts/font = SubResource( 2 )
+text = "use your tetris blocks to build bridges over obstacles
+
+But be careful to not place 5 BLOCKS in a row
+
+or they might dissapear...
+
+ 
+"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text-enemies" type="Label" parent="."]
+margin_left = 4240.0
+margin_top = 152.0
+margin_right = 4544.0
+margin_bottom = 301.0
+rect_pivot_offset = Vector2( 154.006, -8.01779 )
+custom_fonts/font = SubResource( 2 )
+text = "avoid enemies by jumping on top of them or by building bridges over them"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 96, 443 )
 
 [node name="tutorial_enter2" parent="." instance=ExtResource( 9 )]
-position = Vector2( 3335.96, 395.107 )
+position = Vector2( 3240, 395 )
 
 [node name="tutorial_enter3" parent="." instance=ExtResource( 9 )]
 position = Vector2( 3619.94, 197.553 )
 
 [node name="tutorial_enter4" parent="." instance=ExtResource( 9 )]
 position = Vector2( 4280.38, 207.453 )
+
+[node name="fade_text" type="AnimationPlayer" parent="."]
+anims/fade_text = SubResource( 3 )
+
+[connection signal="body_entered" from="tutorial_enter" to="." method="_on_tutorial_enter_body_entered"]
