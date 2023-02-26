@@ -23,8 +23,6 @@ func _ready():
 	player.connect("player_wasted", self, 'on_player_wasted')
 	shapes = set_up_blocks_script.get_block_tyoes()
 	create_grid()
-	spawn_shape()
-	current_shape.on_game_mode_changed()
 	player.get_node("Camera2D").current = true
 	
 	create_a_checkpoint()
@@ -67,11 +65,12 @@ func _process(delta):
 		if Global.game_mode == 'Platformer':
 			Global.game_mode = 'Tetris'
 			player.get_node("Camera2D").current = false
-			current_shape.get_node("Camera2D").current = true
+			spawn_shape()
 		else:
 			Global.game_mode = 'Platformer'
-			current_shape.get_node("Camera2D").current = false
 			player.get_node("Camera2D").current = true
+			current_shape.delete()
+			current_shape = null
 		emit_signal("game_mode_changed")
 	delete_lines()
 
@@ -90,7 +89,6 @@ func delete_lines():
 					start_of_line = x
 			else:
 				start_of_line = null
-
 
 func create_grid():
 	for y in range(100):

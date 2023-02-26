@@ -21,9 +21,10 @@ func set_info(shape_info):
 func on_game_mode_changed():
 	if !current:
 		return
-	visible = !visible
-	for block in blocks:
-		block.get_node("CollisionShape2D").disabled = !block.get_node("CollisionShape2D").disabled
+
+func delete():
+	remove_from_grid()
+	queue_free()
 
 func _on_Timer_timeout():
 	fall_down()
