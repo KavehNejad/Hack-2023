@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://assets/images/icon.png" type="Texture" id=1]
+[ext_resource path="res://assets/images/block.png" type="Texture" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 28.5163, 30.0381 )

@@ -16,6 +16,7 @@ func set_info(shape_info):
 				block.position.x = 64 * x - int(length/2) * 64
 				block.position.y = 64 * y - int(length/2) * 64
 				add_child(block)
+				block.get_node("Sprite").modulate = Color(shape_info['colour'])
 				blocks.append(block)
 
 func on_game_mode_changed():
