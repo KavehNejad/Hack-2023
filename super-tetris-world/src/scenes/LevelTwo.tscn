@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/tilesets/default.tres" type="TileSet" id=1]
+[ext_resource path="res://src/scenes/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/scripts/world.gd" type="Script" id=3]
+[ext_resource path="res://src/scenes/exit_portal.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/scenes/flag.tscn" type="PackedScene" id=5]
+
+[node name="LevelOne" type="Node"]
+script = ExtResource( 3 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 416, 480 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+format = 1
+tile_data = PoolIntArray( 196638, 0, 0, 196639, 0, 0, 196640, 0, 0, 196641, 0, 0, 262159, 0, 0, 262160, 0, 0, 262161, 0, 0, 327695, 0, 0, 393231, 0, 0, 458767, 0, 0, 524288, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0, 524292, 0, 0, 524293, 0, 0, 524294, 0, 0, 524295, 0, 0, 524296, 0, 0, 524297, 0, 0, 524298, 0, 0, 524299, 0, 0, 524300, 0, 0, 524301, 0, 0, 524302, 0, 0, 524303, 0, 0, 524314, 0, 0, 524315, 0, 0, 524316, 0, 0, 524317, 0, 0, 524318, 0, 0, 524319, 0, 0, 524320, 0, 0, 524321, 0, 0, 524322, 0, 0, 524323, 0, 0, 524324, 0, 0, 524325, 0, 0, 524326, 0, 0, 524327, 0, 0, 524328, 0, 0, 524329, 0, 0, 524330, 0, 0, 524331, 0, 0, 524332, 0, 0, 524333, 0, 0, 524334, 0, 0 )
+
+[node name="exit_portal" parent="." instance=ExtResource( 4 )]
+position = Vector2( 2849.93, 475.46 )
+needs_flag = true
+
+[node name="flag" parent="." instance=ExtResource( 5 )]
+position = Vector2( 2018.05, 158.367 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="time" type="Label" parent="CanvasLayer"]
+margin_left = 871.0
+margin_top = 6.0
+margin_right = 921.0
+margin_bottom = 34.0
+text = "TIME: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
