@@ -40,7 +40,7 @@ animations = [ {
 
 [sub_resource type="CapsuleShape2D" id=6]
 radius = 36.1086
-height = 46.9395
+height = 55.7828
 
 [node name="KinematicBody2D" type="KinematicBody2D" groups=[
 "Player",
@@ -49,10 +49,9 @@ script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 5 )
-animation = "jump"
+animation = "walking"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 2.52269 )
 shape = SubResource( 6 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
