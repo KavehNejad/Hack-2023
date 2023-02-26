@@ -78,7 +78,7 @@ func delete_lines():
 	var start_of_line = null
 	for y in range(100):
 		for x in range(1000):
-			if grid[y][x] && tile_set_grid[y][x] == 0 && !grid[y][x].get_parent().current:
+			if grid[y][x] && is_instance_valid(grid[y][x]) && tile_set_grid[y][x] == 0 && !grid[y][x].get_parent().current:
 				if start_of_line && x - start_of_line == 5:
 					for i in range(start_of_line, x):
 						grid[y][i].queue_free()

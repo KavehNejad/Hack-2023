@@ -39,6 +39,7 @@ func fall_down():
 		if current:
 			emit_signal("block_bottom")
 
+
 		current = false
 	add_to_grid()
 
@@ -69,6 +70,9 @@ func _physics_process(delta):
 		if overlaps():
 			rotate(-deg2rad(90))
 		add_to_grid()
+	if Input.is_action_just_pressed("discard"):
+		emit_signal("block_bottom")
+		delete()
 	
 	if position.y > 700:
 		emit_signal("block_bottom")
