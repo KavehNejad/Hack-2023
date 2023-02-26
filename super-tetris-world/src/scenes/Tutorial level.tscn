@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://assets/tilesets/default.tres" type="TileSet" id=1]
 [ext_resource path="res://src/scenes/Player.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://src/scenes/spikes.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/scenes/tutorial_enter.tscn" type="PackedScene" id=9]
 [ext_resource path="res://assets/fonts/PixelFont.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://src/scenes/Portal.tscn" type="PackedScene" id=11]
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 10 )
@@ -248,5 +249,9 @@ anims/fade_text = SubResource( 3 )
 
 [node name="Checkpoint" parent="." instance=ExtResource( 4 )]
 position = Vector2( 2798.84, 221.749 )
+
+[node name="Portal" parent="." instance=ExtResource( 11 )]
+position = Vector2( 5304, 351.523 )
+scale = Vector2( 1.4, 1.3 )
 
 [connection signal="body_entered" from="tutorial_enter" to="." method="_on_tutorial_enter_body_entered"]

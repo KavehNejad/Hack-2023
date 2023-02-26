@@ -6,15 +6,15 @@
 [ext_resource path="res://assets/fonts/PixelFont.ttf" type="DynamicFontData" id=4]
 
 [sub_resource type="DynamicFont" id=1]
-size = 35
+size = 50
+outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 4 )
 
 [sub_resource type="Theme" id=2]
 default_font = SubResource( 1 )
 
 [sub_resource type="DynamicFont" id=3]
-size = 50
-outline_color = Color( 0, 0, 0, 1 )
+size = 35
 font_data = ExtResource( 4 )
 
 [sub_resource type="Theme" id=4]
