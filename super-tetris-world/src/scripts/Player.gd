@@ -12,6 +12,7 @@ var min_jump_height = 0.8 * Global.tile_size
 var jump_duration = 0.5
 
 var velocity = Vector2.ZERO
+var can_kill = true
 
 func _ready():
 	gravity = 2 * max_jump_height / pow(jump_duration, 2)
@@ -25,9 +26,12 @@ func _physics_process(delta):
 	velocity.y += gravity * delta
 	move_and_slide(velocity, Vector2.UP)
 	for i in get_slide_count():
-		if get_slide_collision(i).collider.is_in_group("enemy") && velocity.y > 0:
+		if get_slide_collision(i).collider.is_in_group("enemy") && can_kill:
 			get_slide_collision(i).collider.queue_free()
 			velocity.y = max_jump_velocity
+	if is_on_floor():
+		can_kill = false
+		$Timer.start()
 	if position.y > 850:
 		die()
 
@@ -50,3 +54,5 @@ func move(delta):
 		velocity.x -= speed
 
 
+func _on_Timer_timeout():
+	can_kill = true

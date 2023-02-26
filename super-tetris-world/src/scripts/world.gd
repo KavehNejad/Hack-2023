@@ -13,6 +13,23 @@ var grid = []
 var tile_set_grid = []
 var shapes
 
+var demo_shapes = [
+	{
+		"layout": [
+		  [1, 0, 0],
+		  [1, 0, 0],
+		  [1, 1, 0]
+		]
+	},
+	{
+		"layout": [
+		  [0, 1, 0],
+		  [0, 1, 0],
+		  [0, 1, 0]
+		]
+	}
+]
+
 var time = 0
 
 onready var player = get_node('Player')
