@@ -100,7 +100,7 @@ func _ready():
 		return
 
 	if (is_demo):
-		var intro_text = load_text("res://assets/text/intro.txt")
+		var intro_text = load_text("res://assets/text/intro.tres")
 		$Player/Camera2D/CanvasLayer/Dialogue.start_speak(intro_text, "long")
 		dialogue_displayed = true
 
@@ -175,12 +175,13 @@ func _process(delta):
 		emit_signal("game_mode_changed")
 	delete_lines()
 	if (is_demo):
-		if (dialogue_displayed == true) && (get_node_or_null("Player/Camera2D/Dialogue") == null):
+		if (dialogue_displayed == true) && (get_node_or_null("Player/Camera2D/CanvasLayer/Dialogue") == null):
 			dialogue_removed()
 
 func dialogue_removed():
 	dialogue_displayed = false
-	$fade_text.play("fade_text")
+	print("gggg")
+	$fade_text.play("fade_in_text")
 		
 func delete_lines():
 	var start_of_line = null
@@ -226,6 +227,6 @@ func _on_tutorial_enter_body_entered(body):
 		var dialogue_instance = DIALOGUE.instance()
 		dialogue_displayed = true
 		$Player/Camera2D/CanvasLayer.add_child(dialogue_instance)
-		var text = load_text("res://assets/text/tetris.txt")
+		var text = load_text("res://assets/text/tetris-mechanics-intro.tres")
 		$Player/Camera2D/CanvasLayer/Dialogue.start_speak(text, "long")
 		tetris_dialogue_done = true

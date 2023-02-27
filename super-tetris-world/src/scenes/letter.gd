@@ -13,4 +13,4 @@ func _process(delta):
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if (goodbye):
-		get_tree().change_scene("res://src/scenes/Tutorial level.tscn")
+		get_tree().change_scene("res://src/scenes/levels/tutorial_level.tscn")
