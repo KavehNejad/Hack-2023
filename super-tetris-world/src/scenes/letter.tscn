@@ -75,7 +75,7 @@ rect_pivot_offset = Vector2( 154.006, -8.01779 )
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "I kidnapped Princess Johnie Peach while you were at the openday.
-Come and rscue him.
+Come and rescue him.
 
 - Some generic bad guy"
 autowrap = true

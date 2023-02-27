@@ -98,7 +98,7 @@ func _ready():
 	Global.is_demo = is_demo
 	if is_last:
 		return
-	
+
 	if (is_demo):
 		var intro_text = load_text("res://assets/text/intro.txt")
 		$Player/Camera2D/CanvasLayer/Dialogue.start_speak(intro_text, "long")
