@@ -31,12 +31,12 @@ func start_speak (textInput, type):
 func speak_long():
 	$TextureRect/Text.visible = false
 	$TextureRect/Text.text = text[current_line][0]
-	var sound = load("res://assets/sounds/Dialogue/.wav")
+#	var sound = load("res://assets/sounds/Dialogue/.wav")
 	current_line+= 1
 	$AnimationPlayer.play("typewriter")
-	$AudioStreamPlayer.stream = sound
+#	$AudioStreamPlayer.stream = sound
 	$TextureRect/Text.visible = true
-	$AudioStreamPlayer.play()
+#	$AudioStreamPlayer.play()
 	
 func speak_random():
 	$TextureRect/Text.text = text[0]
