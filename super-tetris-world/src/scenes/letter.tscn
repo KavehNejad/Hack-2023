@@ -2,7 +2,7 @@
 
 [ext_resource path="res://assets/images/peach-letter.png" type="Texture" id=1]
 [ext_resource path="res://assets/fonts/PixelFont.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://src/scenes/letter.gd" type="Script" id=3]
+[ext_resource path="res://src/scripts/letter.gd" type="Script" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 24

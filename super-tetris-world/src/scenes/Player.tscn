@@ -1,9 +1,8 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/images/robot-walking-Sheet.png" type="Texture" id=1]
 [ext_resource path="res://src/scripts/Player.gd" type="Script" id=2]
 [ext_resource path="res://assets/images/jump-robot.png" type="Texture" id=3]
-[ext_resource path="res://src/scenes/Dialogue.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/images/block.png" type="Texture" id=5]
 
 [sub_resource type="AtlasTexture" id=1]
@@ -48,6 +47,25 @@ height = 55.7828
 ]]
 script = ExtResource( 2 )
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="buttons" type="Node2D" parent="CanvasLayer"]
+
+[node name="touch_screen_right" type="TouchScreenButton" parent="CanvasLayer/buttons"]
+position = Vector2( 179.097, 472.809 )
+normal = ExtResource( 5 )
+visibility_mode = 1
+
+[node name="touch_screen_up" type="TouchScreenButton" parent="CanvasLayer/buttons"]
+position = Vector2( 887.585, 471.81 )
+normal = ExtResource( 5 )
+visibility_mode = 1
+
+[node name="touch_screen_left" type="TouchScreenButton" parent="CanvasLayer/buttons"]
+position = Vector2( 31.6901, 472.985 )
+normal = ExtResource( 5 )
+visibility_mode = 1
+
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 5 )
 animation = "walking"
@@ -60,34 +78,13 @@ limit_left = 0
 limit_top = 0
 limit_bottom = 576
 
-[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
-
-[node name="Dialogue" parent="Camera2D/CanvasLayer" instance=ExtResource( 4 )]
-
-[node name="buttons" type="Node2D" parent="Camera2D/CanvasLayer"]
-
-[node name="touch_screen_right" type="TouchScreenButton" parent="Camera2D/CanvasLayer/buttons"]
-position = Vector2( 179.097, 472.809 )
-normal = ExtResource( 5 )
-visibility_mode = 1
-
-[node name="touch_screen_up" type="TouchScreenButton" parent="Camera2D/CanvasLayer/buttons"]
-position = Vector2( 887.585, 471.81 )
-normal = ExtResource( 5 )
-visibility_mode = 1
-
-[node name="touch_screen_left" type="TouchScreenButton" parent="Camera2D/CanvasLayer/buttons"]
-position = Vector2( 31.6901, 472.985 )
-normal = ExtResource( 5 )
-visibility_mode = 1
-
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
 
-[connection signal="pressed" from="Camera2D/CanvasLayer/buttons/touch_screen_right" to="." method="_on_touch_screen_right_pressed"]
-[connection signal="released" from="Camera2D/CanvasLayer/buttons/touch_screen_right" to="." method="_on_touch_screen_right_released"]
-[connection signal="pressed" from="Camera2D/CanvasLayer/buttons/touch_screen_up" to="." method="_on_touch_screen_up_pressed"]
-[connection signal="pressed" from="Camera2D/CanvasLayer/buttons/touch_screen_left" to="." method="_on_touch_screen_left_pressed"]
-[connection signal="released" from="Camera2D/CanvasLayer/buttons/touch_screen_left" to="." method="_on_touch_screen_left_released"]
+[connection signal="pressed" from="CanvasLayer/buttons/touch_screen_right" to="." method="_on_touch_screen_right_pressed"]
+[connection signal="released" from="CanvasLayer/buttons/touch_screen_right" to="." method="_on_touch_screen_right_released"]
+[connection signal="pressed" from="CanvasLayer/buttons/touch_screen_up" to="." method="_on_touch_screen_up_pressed"]
+[connection signal="pressed" from="CanvasLayer/buttons/touch_screen_left" to="." method="_on_touch_screen_left_pressed"]
+[connection signal="released" from="CanvasLayer/buttons/touch_screen_left" to="." method="_on_touch_screen_left_released"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

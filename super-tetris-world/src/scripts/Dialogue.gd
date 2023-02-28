@@ -4,14 +4,8 @@ var text = ["", 1]
 var current_type = "long"
 
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if Input.is_action_just_pressed("skip") && Global.is_demo:
+	if Input.is_action_just_pressed("skip"):
 		if current_type == "long":
 			next()
 		elif current_type == "random":
@@ -48,7 +42,6 @@ func _on_AudioStreamPlayer_finished():
 	$AudioStreamPlayer.stop()
 
 func next():
-	("next")
 	if (current_line < (text.size())):
 		speak_long()
 	else:

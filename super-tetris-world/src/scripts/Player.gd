@@ -18,8 +18,7 @@ var move_right_button_pressed = false
 var move_left_button_pressed = false
 
 func _ready():
-	if !get_parent().is_demo:
-		$Camera2D/CanvasLayer.queue_free()
+
 	gravity = 2 * max_jump_height / pow(jump_duration, 2)
 	max_jump_velocity = -sqrt(2 * gravity * max_jump_height)
 	min_jump_velocity = -sqrt(2 * gravity * min_jump_height)
@@ -67,9 +66,9 @@ func handle_keyboard_movement(delta):
 
 func on_game_mode_changed():
 	if Global.game_mode == 'Platformer':
-		$Camera2D/CanvasLayer/buttons.visible = true
+		$CanvasLayer/buttons.visible = true
 	else:
-		$Camera2D/CanvasLayer/buttons.visible = false
+		$CanvasLayer/buttons.visible = false
 
 func move(direction):
 	if direction == 'up':
