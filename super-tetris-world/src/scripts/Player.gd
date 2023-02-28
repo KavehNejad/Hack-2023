@@ -14,6 +14,9 @@ var jump_duration = 0.5
 var velocity = Vector2.ZERO
 var can_kill = true
 
+var move_right_button_pressed = false
+var move_left_button_pressed = false
+
 func _ready():
 	if !get_parent().is_demo:
 		$Camera2D/CanvasLayer.queue_free()
@@ -24,6 +27,7 @@ func _ready():
 func _physics_process(delta):
 	if Global.game_mode == 'Tetris':
 		return
+	velocity.x = 0
 	check_if_key_pressed(delta)
 	velocity.y += gravity * delta
 	move_and_slide(velocity, Vector2.UP)
@@ -49,19 +53,34 @@ func die():
 
 func check_if_key_pressed(delta):
 	if not Global.has_lost and not Global.game_paused:
-		move(delta)
+		handle_keyboard_movement(delta)
 
-func move(delta):
-	velocity.x = 0
+func handle_keyboard_movement(delta):
 	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = max_jump_velocity
+		move('up')
 	if Input.is_action_just_released("jump") and velocity.y < min_jump_velocity:
+		move('min_up')
+	if Input.is_action_pressed("right") || move_right_button_pressed:
+		move('right')
+	if Input.is_action_pressed("left") || move_left_button_pressed:
+		move('left')
+
+func on_game_mode_changed():
+	if Global.game_mode == 'Platformer':
+		$Camera2D/CanvasLayer/buttons.visible = true
+	else:
+		$Camera2D/CanvasLayer/buttons.visible = false
+
+func move(direction):
+	if direction == 'up':
+		velocity.y = max_jump_velocity
+	if direction == 'min_up':
 		velocity.y = min_jump_velocity
-	if Input.is_action_pressed("right"):
+	if direction == 'right':
 		velocity.x += speed
 		$AnimatedSprite.flip_h = false
 		$AnimatedSprite.play("walking")
-	if Input.is_action_pressed("left"):
+	if direction == 'left':
 		velocity.x -= speed
 		$AnimatedSprite.flip_h = true
 		$AnimatedSprite.play("walking")
@@ -69,3 +88,24 @@ func move(delta):
 
 func _on_Timer_timeout():
 	can_kill = true
+
+
+func _on_touch_screen_right_released():
+	move_right_button_pressed = false
+
+
+func _on_touch_screen_right_pressed():
+	move_right_button_pressed = true
+
+
+func _on_touch_screen_left_pressed():
+	move_left_button_pressed = true
+
+
+func _on_touch_screen_left_released():
+	move_left_button_pressed = false
+
+
+func _on_touch_screen_up_pressed():
+	if is_on_floor():
+		move('up')

@@ -15,7 +15,6 @@ func _process(_delta):
 		if current_type == "long":
 			next()
 		elif current_type == "random":
-			print("destroying dialogue")
 			queue_free()
 
 
@@ -57,3 +56,10 @@ func next():
 
 func destroy():
 	queue_free()
+
+
+func _on_skip_pressed():
+	if current_type == "long":
+		next()
+	elif current_type == "random":
+		queue_free()

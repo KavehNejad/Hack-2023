@@ -96,6 +96,7 @@ func load_text(path):
 
 func _ready():
 	Global.is_demo = is_demo
+	connect("game_mode_changed", player, "on_game_mode_changed")
 	if is_last:
 		return
 
@@ -140,6 +141,7 @@ func spawn_shape():
 	shape.connect("block_bottom",self, "on_block_touch_bottom")
 	connect("game_mode_changed", shape, "on_game_mode_changed")
 
+
 func get_next_block():
 	if is_demo:
 		demo_block_index += 1
@@ -159,28 +161,30 @@ func _process(delta):
 	$CanvasLayer/time.set_text("Time: " + str(stepify(time, 0.01)))
 	
 	if Input.is_action_just_pressed("game_mode_switch"):
-		if Global.game_mode == 'Platformer':
-			Global.game_mode = 'Tetris'
-			player.get_node("Camera2D").current = false
-			spawn_shape()
-			$AudioStreamPlayer2D.play()
-			VisualServer.set_default_clear_color(Color("#000000"))
-		else:
-			Global.game_mode = 'Platformer'
-			player.get_node("Camera2D").current = true
-			current_shape.delete()
-			current_shape = null
-			$AudioStreamPlayer2D.stop()
-			VisualServer.set_default_clear_color(Color("#2596be"))
-		emit_signal("game_mode_changed")
+		switch_game_mode()
 	delete_lines()
 	if (is_demo):
 		if (dialogue_displayed == true) && (get_node_or_null("Player/Camera2D/CanvasLayer/Dialogue") == null):
 			dialogue_removed()
 
+func switch_game_mode():
+	if Global.game_mode == 'Platformer':
+		Global.game_mode = 'Tetris'
+		player.get_node("Camera2D").current = false
+		spawn_shape()
+		$AudioStreamPlayer2D.play()
+		VisualServer.set_default_clear_color(Color("#000000"))
+	else:
+		Global.game_mode = 'Platformer'
+		player.get_node("Camera2D").current = true
+		current_shape.delete()
+		current_shape = null
+		$AudioStreamPlayer2D.stop()
+		VisualServer.set_default_clear_color(Color("#2596be"))
+	emit_signal("game_mode_changed")
+
 func dialogue_removed():
 	dialogue_displayed = false
-	print("gggg")
 	$fade_text.play("fade_in_text")
 		
 func delete_lines():
@@ -230,3 +234,7 @@ func _on_tutorial_enter_body_entered(body):
 		var text = load_text("res://assets/text/tetris-mechanics-intro.tres")
 		$Player/Camera2D/CanvasLayer/Dialogue.start_speak(text, "long")
 		tetris_dialogue_done = true
+
+
+func _on_touch_screen_switch_mode_pressed():
+	switch_game_mode()

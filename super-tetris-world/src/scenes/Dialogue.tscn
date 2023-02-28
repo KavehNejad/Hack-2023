@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://src/scripts/Dialogue.gd" type="Script" id=1]
 [ext_resource path="res://assets/images/dialogue.png" type="Texture" id=2]
 [ext_resource path="res://assets/images/mario.png" type="Texture" id=3]
 [ext_resource path="res://assets/fonts/PixelFont.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://assets/images/block.png" type="Texture" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 50
@@ -133,4 +134,10 @@ anims/typewriter = SubResource( 7 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
+[node name="skip" type="TouchScreenButton" parent="."]
+position = Vector2( 784.889, 181.019 )
+normal = ExtResource( 5 )
+visibility_mode = 1
+
 [connection signal="finished" from="AudioStreamPlayer" to="." method="_on_AudioStreamPlayer_finished"]
+[connection signal="pressed" from="skip" to="." method="_on_skip_pressed"]
