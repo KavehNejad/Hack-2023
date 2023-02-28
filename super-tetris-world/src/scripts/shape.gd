@@ -55,6 +55,8 @@ func _ready():
 	add_to_grid()
 
 func _physics_process(delta):
+	if !current:
+		return
 	if Input.is_action_just_pressed("block_right"):
 		move("right")
 	if Input.is_action_just_pressed("block_left"):
@@ -68,6 +70,8 @@ func _physics_process(delta):
 
 
 func discard():
+	if !current:
+		return
 	emit_signal("block_bottom")
 	delete()
 
