@@ -44,10 +44,9 @@ func fall_down():
 	if overlaps():
 		position.y -= 64
 		if current:
+			$Camera2D.current = false
 			$CanvasLayer/buttons.visible = false
 			emit_signal("block_bottom")
-
-
 		current = false
 	add_to_grid()
 

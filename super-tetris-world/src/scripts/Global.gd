@@ -11,4 +11,4 @@ var is_demo = false
 func load_next_scene():
 	level_index += 1
 	var level = levels[level_index]
-	get_tree().change_scene("res://src/scenes/" + level + ".tscn")
+	get_tree().change_scene("res://src/scenes/levels/" + level + ".tscn")

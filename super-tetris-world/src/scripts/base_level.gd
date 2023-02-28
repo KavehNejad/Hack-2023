@@ -41,7 +41,7 @@ func _ready():
 	shapes = set_up_blocks_script.get_block_tyoes()
 	create_grid()
 	player.get_node("Camera2D").current = true
-	
+
 	create_a_checkpoint()
 	
 	var all_cells = $TileMap.get_used_cells()
@@ -59,19 +59,18 @@ func create_a_checkpoint():
 	player_checkpoint_position = player.position
 
 func spawn_shape():
-	if current_shape:
-		current_shape.get_node("Camera2D").current = false
-	var shape = shape_scene.instance()
-	var player_x = get_block_index(player.position.x, 0)['x']
-	current_shape = shape
+	current_shape = shape_scene.instance()
 	current_shape.get_node("Camera2D").current = true
-	shape.set_info(get_next_block())
-	shape.position.x = 64 * player_x - 32
-	shape.position.y = 64 * 1 - 32
-	add_child(shape)
-	shape.connect("block_bottom",self, "on_block_touch_bottom")
-	connect("game_mode_changed", shape, "on_game_mode_changed")
+	current_shape.set_info(get_next_block())
+	current_shape.position.x = (64 * player_x_index()) - 32
+	current_shape.position.y = 32
+	add_child(current_shape)
+	current_shape.connect("block_bottom",self, "on_block_touch_bottom")
+	connect("game_mode_changed", current_shape, "on_game_mode_changed")
 
+
+func player_x_index():
+	return get_block_index(player.position.x, 0)['x']
 
 func get_next_block():
 	return shapes[rand_range(0,len(shapes))]
@@ -97,17 +96,17 @@ func switch_game_mode():
 	else:
 		Global.game_mode = 'Platformer'
 		player.get_node("Camera2D").current = true
-		current_shape.delete()
-		current_shape = null
 		$AudioStreamPlayer2D.stop()
 		VisualServer.set_default_clear_color(Color("#2596be"))
+		current_shape.delete()
+		current_shape = null
 	emit_signal("game_mode_changed")
 
 
 func delete_lines():
 	var start_of_line = null
-	for y in range(100):
-		for x in range(1000):
+	for y in range(len(grid)):
+		for x in range(len(grid[y])):
 			if grid[y][x] && is_instance_valid(grid[y][x]) && tile_set_grid[y][x] == 0 && !grid[y][x].get_parent().current:
 				if start_of_line && x - start_of_line == 5:
 					for i in range(start_of_line, x):

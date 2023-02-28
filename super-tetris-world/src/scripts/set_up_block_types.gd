@@ -7,8 +7,8 @@ func _get_json(file_path):
 	file.close()
 	return parse_json(text)
 
-func get_block_tyoes():
-	var shape_types = _get_json("res://assets/data/shapes.json")
+func get_block_tyoes(json = "res://assets/data/shapes.json"):
+	var shape_types = _get_json(json)
 	var shapes = []
 	for shape_info in shape_types:
 		shapes.append(shape_info)

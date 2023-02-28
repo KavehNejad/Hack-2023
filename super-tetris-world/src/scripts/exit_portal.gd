@@ -8,4 +8,5 @@ func _process(delta):
 			if needs_flag && !get_parent().has_flag:
 				return
 			Global.load_next_scene()
+			queue_free()
 	
