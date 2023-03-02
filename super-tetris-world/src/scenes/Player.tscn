@@ -57,7 +57,7 @@ normal = ExtResource( 5 )
 visibility_mode = 1
 
 [node name="touch_screen_up" type="TouchScreenButton" parent="CanvasLayer/buttons"]
-position = Vector2( 887.585, 471.81 )
+position = Vector2( 863.585, 457.81 )
 normal = ExtResource( 5 )
 visibility_mode = 1
 

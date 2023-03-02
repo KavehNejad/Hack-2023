@@ -10,7 +10,7 @@ script = ExtResource( 3 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="touch_screen_switch_mode" type="TouchScreenButton" parent="CanvasLayer"]
-position = Vector2( 862.052, 446.74 )
+position = Vector2( 756.54, 457.965 )
 normal = ExtResource( 1 )
 visibility_mode = 1
 
