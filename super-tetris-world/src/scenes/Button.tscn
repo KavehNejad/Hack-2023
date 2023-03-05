@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/images/default_button.png" type="Texture" id=1]
+[ext_resource path="res://src/scripts/Button.gd" type="Script" id=2]
+[ext_resource path="res://assets/images/block.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 19.6992, 13.4093 )
+
+[node name="Button" type="StaticBody2D" groups=[
+"button",
+]]
+script = ExtResource( 2 )
+button_texture = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+hframes = 2
+
+[node name="NotPressedCollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2( 1.00702, 0.999761 )
+polygon = PoolVector2Array( -34.4006, 32.0102, -24.2248, 24.1533, -19.878, 23.9352, -19.9765, 14.2101, -15.6416, 13.9124, -15.543, 12.0269, 15.4911, 12.0269, 15.6881, 13.7139, 19.3334, 13.9124, 19.9245, 23.7368, 23.9086, 23.8195, 33.6547, 32.0102 )
+disabled = true
+
+[node name="PressedCollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2( 1.00702, 0.999761 )
+polygon = PoolVector2Array( -34.7137, 32.1154, -24.2983, 24.1571, -20.075, 24.0345, -15.8386, 19.9658, 15.5896, 19.9658, 20.1215, 23.6375, 24.0743, 23.9864, 33.9679, 32.0102 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( -0.44545, 12.4726 )
+shape = SubResource( 1 )
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

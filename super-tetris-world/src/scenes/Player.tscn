@@ -42,7 +42,7 @@ animations = [ {
 radius = 36.1086
 height = 55.7828
 
-[node name="KinematicBody2D" type="KinematicBody2D" groups=[
+[node name="Player" type="KinematicBody2D" groups=[
 "Player",
 ]]
 script = ExtResource( 2 )
