@@ -8,25 +8,30 @@ export var player_triggered = false
 export var enemy_triggered = false
 export var block_triggered = false
 
+
+onready var ACTIVATION_GROUPS = {
+	"player": player_triggered,
+	"enemy": player_triggered,
+	'block': block_triggered
+}
+
+
 signal button_activated(is_pressed)
 
 func _ready():
 	$Sprite.texture = button_texture
 	set_sprite_frame(button_pressed)
 	set_collision_poligon(button_pressed)
-	
+
 func set_button_sprite(this_button_texture):
 	button_texture = this_button_texture
 	if Engine.editor_hint:
 		$Sprite.texture = button_texture
 
 func _on_Area2D_body_entered(body):
-	if (player_triggered && body.is_in_group("Player")):
-		button_activated()
-	if (enemy_triggered && body.is_in_group("enemy")):
-		button_activated()
-	if (block_triggered && body.is_in_group("Block")):
-		button_activated()
+	for group in body.get_groups():
+		if group in ACTIVATION_GROUPS.keys() and ACTIVATION_GROUPS[group]:
+			button_activated()
 
 func button_activated():
 	button_pressed = !button_pressed
