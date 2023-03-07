@@ -19,7 +19,7 @@ func spawn_shape(blocks_in_shape):
 
 	var shape_layout = create_new_empty_shape_layout()
 	for block in blocks_in_shape:
-		shape_layout[(block.global_position.y - new_shape.position.y) / 64][(block.global_position.x - new_shape.position.x) / 64] = 1
+		shape_layout = add_block_to_shape_layout(shape_layout, block, new_shape)
 	shape.world.add_child(new_shape)
 	var colours = ['#A020F0', '#FF0000', '#00FFFF', '#FFFFFF']
 	var new_colour = colours[rand_range(0,len(colours))]
@@ -27,11 +27,18 @@ func spawn_shape(blocks_in_shape):
 	new_shape.add_to_grid()
 
 
+func add_block_to_shape_layout(shape_layout, block, new_shape):
+	var x_index = (block.global_position.x - new_shape.position.x) / 64
+	var y_index = (block.global_position.y - new_shape.position.y) / 64
+	shape_layout[y_index][x_index] = 1
+	return shape_layout
+
+
 func create_new_empty_shape_layout():
 	var shape_layout = []
-	for i in range(3):
+	for i in range(len(shape.layout)):
 		shape_layout.append([])
-		for x in range(3):
+		for x in range(len(shape.layout[0])):
 			shape_layout[-1].append(0)
 	return shape_layout
 
@@ -68,13 +75,17 @@ func connecting_blocks_of_section(block, blocks_of_section_checked, blocks_in_se
 
 	for connecting_block in blocks_in_section:
 		if not(connecting_block in blocks_of_section_checked):
-			return connecting_blocks_of_section(connecting_block, blocks_of_section_checked, blocks_in_section)
+			return connecting_blocks_of_section(connecting_block,
+				blocks_of_section_checked,
+				blocks_in_section)
 
 	return blocks_in_section
 
 
 func connecting_blocks_of_shape(block):
-	var indexs = shape.world.get_block_index(block.global_position.x, block.global_position.y)
+	var indexs = shape.world.get_block_index(
+		block.global_position.x, block.global_position.y
+	)
 	var blocks = []
 	
 	var indexs_to_check = [
@@ -85,7 +96,9 @@ func connecting_blocks_of_shape(block):
 	]
 
 	for index_to_check in indexs_to_check:
-		var connecting_block = shape.world.get_block_by_index(index_to_check['x'], index_to_check['y'])
+		var connecting_block = shape.world.get_block_by_index(
+			index_to_check['x'], index_to_check['y']
+		)
 		if is_object_part_of_shape(connecting_block):
 			blocks.append(connecting_block)
 	return blocks
