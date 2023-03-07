@@ -18,6 +18,7 @@ var set_up_blocks_script = load("res://src/scripts/set_up_block_types.gd").new()
 var has_flag = false
 var tetris_dialogue_done = false
 var player_checkpoint_position 
+var dialog_is_open = false
 
 var grid = []
 var tile_set_grid = []
@@ -65,10 +66,12 @@ func connect_dialogue_signals(dialogue):
 
 
 func on_dialog_oppened():
+	dialog_is_open = true
 	shape_fall_timer.stop()
 
 
 func on_dialog_clossed():
+	dialog_is_open = false
 	shape_fall_timer.start()
 
 
@@ -110,6 +113,8 @@ func _process(delta):
 		switch_game_mode()
 
 func switch_game_mode():
+	if dialog_is_open:
+		return
 	if Global.game_mode == 'Platformer':
 		Global.game_mode = 'Tetris'
 		player.get_node("Camera2D").current = false
@@ -121,6 +126,7 @@ func switch_game_mode():
 		player.get_node("Camera2D").current = true
 		$AudioStreamPlayer2D.stop()
 		VisualServer.set_default_clear_color(Color("#2596be"))
+		current_shape.disconnect("block_bottom",self, "on_block_touch_bottom")
 		current_shape.delete()
 		current_shape = null
 	emit_signal("game_mode_changed")
@@ -141,13 +147,15 @@ func delete_lines():
 			else:
 				start_of_line = null
 
+
 func create_grid():
 	for y in range(50):
 		grid.append([])
 		tile_set_grid.append([])
-		for x in range(10000):
+		for _x in range(10000):
 			grid[y].append(null)
 			tile_set_grid[y].append(0)
+
 
 func get_block_index(x, y):
 	return { 'x': round(x / 64), 'y': round(y / 64) }

@@ -3,7 +3,9 @@
 [ext_resource path="res://assets/images/spike.png" type="Texture" id=1]
 [ext_resource path="res://src/scripts/spikes.gd" type="Script" id=2]
 
-[node name="spikes" type="Area2D"]
+[node name="spikes" type="Area2D" groups=[
+"spike",
+]]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]

@@ -14,6 +14,8 @@ var colour
 
 var rotations = [0, 90, 180, 270]
 var rotation_index = 0
+var has_been_defragmented = false
+var defragment_mutex = Mutex.new()
 
 
 
@@ -21,15 +23,14 @@ func set_info(shape_info):
 	colour = shape_info['colour']
 	layout = shape_info['layout']
 	world.shapes.append(self)
-	var length = len(layout)
 	for y in range(len(shape_info['layout'])):
 		for x in range(len(shape_info['layout'][y])):
 			if shape_info['layout'][y][x] == 1:
 				var block = block_scene.instance()
 				block.x_in_parent = x
 				block.y_in_parent = y
-				block.position.x = 64 * x# - int(length/2) * 64
-				block.position.y = 64 * y# - int(length/2) * 64
+				block.position.x = 64 * x# - int(len(layout)/2) * 64
+				block.position.y = 64 * y# - int(len(layout)/2) * 64
 				add_child(block)
 				block.get_node("Sprite").modulate = Color(shape_info['colour'])
 				blocks.append(block)
@@ -45,6 +46,8 @@ func on_game_mode_changed():
 func delete():
 	remove_from_grid()
 	world.shapes.erase(self)
+	if current:
+		stop_being_current()
 	queue_free()
 
 func fall_down():
@@ -52,7 +55,8 @@ func fall_down():
 	position.y += 64
 	if overlaps():
 		position.y -= 64
-		stop_being_current()
+		if current:
+			stop_being_current()
 	add_to_grid()
 	add_indexs_to_blocks()
 
@@ -69,10 +73,9 @@ func add_indexs_to_blocks():
 func stop_being_current():
 	$shape_camera.current = false
 	touchscreen_buttons.visible = false
-	if current:
-		emit_signal("block_bottom")
-	current = false
+	emit_signal("block_bottom")
 	world.disconnect("game_mode_changed", self, "on_game_mode_changed")
+	current = false
 
 func _ready():
 	add_to_grid()
@@ -89,12 +92,8 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("rotate_block"):
 		move("rotate")
 	if Input.is_action_just_pressed("discard"):
-		discard()
+		delete()
 
-
-func discard():
-	delete()
-	emit_signal("block_bottom")
 
 func move(direction):
 	if Global.game_mode == 'Platformer' || !current:
@@ -127,9 +126,8 @@ func move(direction):
 			set_rotation(deg2rad(rotations[rotation_index]))
 		add_to_grid()
 
-	if position.y > 700:
-		emit_signal("block_bottom")
-		queue_free()
+	if position.y > 600:
+		delete()
 
 func _on_touch_screen_left_pressed():
 	move('left')
@@ -137,12 +135,18 @@ func _on_touch_screen_left_pressed():
 func _on_touch_screen_rotate_pressed():
 	move('rotate')
 
+
 func remove_block(block):
-	blocks.erase(block)
-	world.remove_block(block.global_position.x, block.global_position.y)
-	defragment_shape_script.defragment_shape(self)
-	remove_from_grid()
-	discard()
+	defragment_mutex.lock()
+	if !has_been_defragmented:
+		has_been_defragmented = true
+
+		blocks.erase(block)
+		world.remove_block(block.global_position.x, block.global_position.y)
+		defragment_shape_script.defragment_shape(self)
+		remove_from_grid()
+		delete()
+	defragment_mutex.unlock()
 
 
 func remove_from_grid():
@@ -154,8 +158,7 @@ func remove_from_grid():
 func add_to_grid():
 	for block in blocks:
 		if is_instance_valid(block):
-			var indexs = world.add_block(round(block.global_position.x), round(block.global_position.y), block)
-			var should_be_pos = world.get_pos_by_index(indexs)
+			world.add_block(round(block.global_position.x), round(block.global_position.y), block)
 
 
 func overlaps():
@@ -168,7 +171,7 @@ func overlaps():
 
 
 func _on_touch_screen_discard_pressed():
-	discard()
+	delete()
 
 
 func _on_touch_screen_down_pressed():

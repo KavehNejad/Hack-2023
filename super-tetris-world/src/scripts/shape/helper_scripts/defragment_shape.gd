@@ -3,13 +3,22 @@ extends Node
 var shape_scene = load("res://src/scenes/shape.tscn")
 
 var shape
+var blocks_on_spikes = []
 
 func defragment_shape(shape_to_defragment):
 	shape = shape_to_defragment
+	set_blocks_on_spikes()
 	var sections = get_sections_of_shape()
 
 	for section in sections:
 		spawn_shape(section)
+
+
+func set_blocks_on_spikes():
+	for spike in shape.world.get_tree().get_nodes_in_group('spike'):
+		for body in spike.get_overlapping_bodies():
+			if body.is_in_group('Block'):
+				blocks_on_spikes.append(body)
 
 
 func spawn_shape(blocks_in_shape):
@@ -36,9 +45,9 @@ func add_block_to_shape_layout(shape_layout, block, new_shape):
 
 func create_new_empty_shape_layout():
 	var shape_layout = []
-	for i in range(len(shape.layout)):
+	for _i in range(len(shape.layout)):
 		shape_layout.append([])
-		for x in range(len(shape.layout[0])):
+		for _x in range(len(shape.layout[0])):
 			shape_layout[-1].append(0)
 	return shape_layout
 
@@ -57,7 +66,7 @@ func get_sections_of_shape():
 	var blocks_of_shape_checked = []
 	var sections = []
 	for block in shape.blocks:
-		if not (block in blocks_of_shape_checked):
+		if not (block in blocks_of_shape_checked) and not (block in blocks_on_spikes):
 			sections.append([])
 			blocks_of_shape_checked.append(block)
 			for connecting_block in connecting_blocks_of_section(block, [], [block]):
@@ -99,7 +108,7 @@ func connecting_blocks_of_shape(block):
 		var connecting_block = shape.world.get_block_by_index(
 			index_to_check['x'], index_to_check['y']
 		)
-		if is_object_part_of_shape(connecting_block):
+		if is_object_part_of_shape(connecting_block) and not (connecting_block in blocks_on_spikes):
 			blocks.append(connecting_block)
 	return blocks
 
