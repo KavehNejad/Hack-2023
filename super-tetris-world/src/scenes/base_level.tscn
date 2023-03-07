@@ -6,6 +6,7 @@
 
 [node name="base_world" type="Node"]
 script = ExtResource( 3 )
+debug = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

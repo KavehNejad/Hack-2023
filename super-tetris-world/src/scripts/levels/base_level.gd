@@ -23,6 +23,7 @@ onready var player = get_node('Player')
 
 var current_shape
 export(bool) var is_last = false
+export(bool) var debug = false
 
 func load_text(path):
 	var file = File.new()

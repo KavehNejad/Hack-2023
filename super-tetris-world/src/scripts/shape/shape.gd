@@ -1,5 +1,10 @@
 extends Node2D
 
+signal block_bottom #block touched bottom
+
+onready var world = get_parent()
+onready var touchscreen_buttons = get_node("CanvasLayer/buttons")
+
 var block_scene = preload("res://src/scenes/block.tscn")
 var defragment_shape_script = load("res://src/scripts/shape/helper_scripts/defragment_shape.gd").new()
 var blocks = []
@@ -7,12 +12,10 @@ var current = false
 var layout = null
 var colour
 
-onready var world = get_parent()
-
-signal block_bottom #block touched bottom
-
 var rotations = [0, 90, 180, 270]
 var rotation_index = 0
+
+
 
 func set_info(shape_info):
 	colour = shape_info['colour']
@@ -33,19 +36,16 @@ func set_info(shape_info):
 
 
 func on_game_mode_changed():
-	if !current:
-		return
 	if Global.game_mode == 'Platformer':
-		$CanvasLayer/buttons.visible = false
+		touchscreen_buttons.visible = false
 	else:
-		$CanvasLayer/buttons.visible = true
+		touchscreen_buttons.visible = true
 
 
 func delete():
-	$CanvasLayer/buttons.visible = false
 	remove_from_grid()
-	queue_free()
 	world.shapes.erase(self)
+	queue_free()
 
 func fall_down():
 	remove_from_grid()
@@ -54,17 +54,25 @@ func fall_down():
 		position.y -= 64
 		stop_being_current()
 	add_to_grid()
+	add_indexs_to_blocks()
+
+
+func add_indexs_to_blocks():
+	if !world.debug:
+		return
+
 	for block in blocks:
 		var indexs = world.get_block_index(block.global_position.x, block.global_position.y)
 		block.get_node('Label').set_text('x: ' + str(indexs['x']) + ' y: ' + str(indexs['y']))
 
 
 func stop_being_current():
-	$Camera2D.current = false
-	$CanvasLayer/buttons.visible = false
+	$shape_camera.current = false
+	touchscreen_buttons.visible = false
 	if current:
 		emit_signal("block_bottom")
 	current = false
+	world.disconnect("game_mode_changed", self, "on_game_mode_changed")
 
 func _ready():
 	add_to_grid()
@@ -86,16 +94,12 @@ func _physics_process(delta):
 
 func discard():
 	delete()
-	world.shapes.erase(self)
-	if !current:
-		stop_being_current()
-		return
 	emit_signal("block_bottom")
 
 func move(direction):
 	if Global.game_mode == 'Platformer' || !current:
 		return
-	#checks for stuff every frame
+
 	if direction == 'right':
 		remove_from_grid()
 		position.x += 64
