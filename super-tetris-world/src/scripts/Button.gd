@@ -33,6 +33,7 @@ func _on_Area2D_body_entered(body):
 		if group in ACTIVATION_GROUPS.keys() and ACTIVATION_GROUPS[group]:
 			button_activated()
 
+
 func button_activated():
 	button_pressed = !button_pressed
 	set_sprite_frame(button_pressed)
