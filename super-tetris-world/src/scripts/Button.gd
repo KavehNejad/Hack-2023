@@ -11,7 +11,7 @@ export var block_triggered = false
 
 onready var ACTIVATION_GROUPS = {
 	"player": player_triggered,
-	"enemy": player_triggered,
+	"enemy": enemy_triggered,
 	'block': block_triggered
 }
 
