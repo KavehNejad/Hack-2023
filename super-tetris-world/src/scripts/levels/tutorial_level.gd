@@ -1,4 +1,4 @@
-extends "res://src/scripts/base_level.gd"
+extends "res://src/scripts/levels/base_level.gd"
 
 var demo_block_index = -1
 var demo_shapes = set_up_blocks_script.get_block_tyoes("res://assets/data/tutorial_level_shapes.json")
