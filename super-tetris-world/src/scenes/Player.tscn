@@ -43,8 +43,8 @@ radius = 36.1086
 height = 55.7828
 
 [node name="Player" type="KinematicBody2D" groups=[
-"Player",
 "needs_to_stop_when_dialogue",
+"player",
 ]]
 script = ExtResource( 2 )
 

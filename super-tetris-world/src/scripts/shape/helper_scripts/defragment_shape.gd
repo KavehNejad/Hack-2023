@@ -17,7 +17,7 @@ func defragment_shape(shape_to_defragment):
 func set_blocks_on_spikes():
 	for spike in shape.world.get_tree().get_nodes_in_group('spike'):
 		for body in spike.get_overlapping_bodies():
-			if body.is_in_group('Block'):
+			if body.is_in_group('block'):
 				blocks_on_spikes.append(body)
 
 
@@ -116,5 +116,5 @@ func connecting_blocks_of_shape(block):
 func is_object_part_of_shape(object):
 	return object &&\
 		typeof(object) != TYPE_INT &&\
-		object.is_in_group('Block') &&\
+		object.is_in_group('block') &&\
 		object.get_parent() == shape
