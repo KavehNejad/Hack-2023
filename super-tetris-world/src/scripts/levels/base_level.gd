@@ -1,29 +1,32 @@
 extends Node
 
-const DIALOGUE = preload("res://src/scenes/Dialogue.tscn")
+signal game_mode_changed
 
-var has_flag = false
+
+export(bool) var is_last = false
+export(bool) var debug = false
+
+
+const DIALOGUE = preload("res://src/scenes/Dialogue.tscn")
+const SHAPE_SCENE = preload("res://src/scenes/shape.tscn")
+
+onready var player = get_node('Player')
+onready var shape_fall_timer = get_node("Timer")
 
 var set_up_blocks_script = load("res://src/scripts/set_up_block_types.gd").new()
-var shape_scene = preload("res://src/scenes/shape.tscn")
+
+var has_flag = false
 var tetris_dialogue_done = false
-
 var player_checkpoint_position 
-
-signal game_mode_changed
 
 var grid = []
 var tile_set_grid = []
 var shapes_types
 var shapes = []
+var current_shape
 
 var dialogue_displayed = false
 
-onready var player = get_node('Player')
-
-var current_shape
-export(bool) var is_last = false
-export(bool) var debug = false
 
 func load_text(path):
 	var file = File.new()
@@ -33,13 +36,14 @@ func load_text(path):
 	var textArray= str2var(textString)
 	return textArray
 
+
 func _ready():
 	connect("game_mode_changed", player, "on_game_mode_changed")
 	if is_last:
 		return
 
 	VisualServer.set_default_clear_color(Color("#2596be"))
-	player.connect("player_wasted", self, 'on_player_wasted')
+	player.connect("player_died", self, 'on_player_died')
 	shapes_types = set_up_blocks_script.get_block_tyoes()
 	create_grid()
 	player.get_node("Camera2D").current = true
@@ -51,7 +55,23 @@ func _ready():
 		grid[cell.y + 1][cell.x + 1] = 1
 		tile_set_grid[cell.y + 1][cell.x + 1] = 1
 
-func on_player_wasted(): 
+
+func connect_dialogue_signals(dialogue):
+	dialogue.connect("dialog_opened", self, "on_dialog_oppened")
+	dialogue.connect("dialog_clossed", self, "on_dialog_clossed")
+	dialogue.connect("dialog_opened", player, "on_dialog_oppened")
+	dialogue.connect("dialog_clossed", player, "on_dialog_clossed")
+
+
+func on_dialog_oppened():
+	shape_fall_timer.stop()
+
+
+func on_dialog_clossed():
+	shape_fall_timer.start()
+
+
+func on_player_died(): 
 	revert_to_checkpoint()
 
 func revert_to_checkpoint():
@@ -61,8 +81,8 @@ func create_a_checkpoint():
 	player_checkpoint_position = player.position
 
 func spawn_shape():
-	current_shape = shape_scene.instance()
-	current_shape.get_node("Camera2D").current = true
+	current_shape = SHAPE_SCENE.instance()
+	current_shape.get_node("shape_camera").current = true
 	add_child(current_shape)
 	current_shape.set_info(get_next_block())
 	current_shape.position.x = (64 * player_x_index()) - 32

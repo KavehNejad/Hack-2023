@@ -1,4 +1,10 @@
 extends Node
+
+signal dialog_opened
+signal dialog_clossed
+
+onready var world = get_parent().get_parent()
+
 var current_line = 0
 var text = ["", 1]
 var current_type = "long"
@@ -13,6 +19,8 @@ func _process(_delta):
 
 
 func start_speak (textInput, type):
+	world.connect_dialogue_signals(self)
+	emit_signal("dialog_opened")
 	text = textInput
 	current_line = 0
 	current_type = type
@@ -46,6 +54,8 @@ func next():
 		speak_long()
 	else:
 		destroy()
+		emit_signal("dialog_clossed")
+
 
 func destroy():
 	queue_free()

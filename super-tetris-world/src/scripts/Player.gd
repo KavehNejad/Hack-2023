@@ -4,7 +4,7 @@ var gravity
 var max_jump_velocity
 var min_jump_velocity
 
-signal player_wasted 
+signal player_died
 
 var speed = 5 * Global.tile_size
 var max_jump_height = 2.25 * Global.tile_size
@@ -13,12 +13,12 @@ var jump_duration = 0.5
 
 var velocity = Vector2.ZERO
 var can_kill = true
+var can_move = true
 
 var move_right_button_pressed = false
 var move_left_button_pressed = false
 
 func _ready():
-
 	gravity = 2 * max_jump_height / pow(jump_duration, 2)
 	max_jump_velocity = -sqrt(2 * gravity * max_jump_height)
 	min_jump_velocity = -sqrt(2 * gravity * min_jump_height)
@@ -48,7 +48,7 @@ func _physics_process(delta):
 		$AnimatedSprite.play("jump")
 
 func die():
-	emit_signal("player_wasted")
+	emit_signal("player_died")
 
 func check_if_key_pressed(delta):
 	if not Global.has_lost and not Global.game_paused:
@@ -71,6 +71,9 @@ func on_game_mode_changed():
 		$CanvasLayer/buttons.visible = false
 
 func move(direction):
+	if !can_move:
+		return
+
 	if direction == 'up':
 		velocity.y = max_jump_velocity
 	if direction == 'min_up':
@@ -108,3 +111,14 @@ func _on_touch_screen_left_released():
 func _on_touch_screen_up_pressed():
 	if is_on_floor():
 		move('up')
+
+
+func on_dialog_oppened():
+	if Global.game_mode == 'Platformer':
+		$CanvasLayer/buttons.visible = false
+	can_move = false
+
+func on_dialog_clossed():
+	if Global.game_mode == 'Platformer':
+		$CanvasLayer/buttons.visible = true
+	can_move = true
