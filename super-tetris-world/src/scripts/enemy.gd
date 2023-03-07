@@ -5,8 +5,11 @@ var gravity = 800
 
 var direction = Vector2.RIGHT
 var velocity = Vector2.ZERO
+var can_move = true
 
 func _physics_process(delta):
+	if !can_move:
+		return
 	check_if_collides_with_player()
 	check_if_change_direction()
 	move(delta)
@@ -51,3 +54,12 @@ func check_if_collides_with_player():
 		if (collider.is_in_group("Player")):
 			collider.die()
 	return true
+
+
+func on_dialog_oppened():
+	can_move = false
+	$AnimatedSprite.playing = false
+
+func on_dialog_clossed():
+	can_move = true
+	$AnimatedSprite.playing = true

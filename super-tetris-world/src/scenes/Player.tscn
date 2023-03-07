@@ -44,6 +44,7 @@ height = 55.7828
 
 [node name="Player" type="KinematicBody2D" groups=[
 "Player",
+"needs_to_stop_when_dialogue",
 ]]
 script = ExtResource( 2 )
 

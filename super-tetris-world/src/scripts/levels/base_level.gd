@@ -59,8 +59,9 @@ func _ready():
 func connect_dialogue_signals(dialogue):
 	dialogue.connect("dialog_opened", self, "on_dialog_oppened")
 	dialogue.connect("dialog_clossed", self, "on_dialog_clossed")
-	dialogue.connect("dialog_opened", player, "on_dialog_oppened")
-	dialogue.connect("dialog_clossed", player, "on_dialog_clossed")
+	for node in get_tree().get_nodes_in_group("needs_to_stop_when_dialogue"):
+		dialogue.connect("dialog_opened", node, "on_dialog_oppened")
+		dialogue.connect("dialog_clossed", node, "on_dialog_clossed")
 
 
 func on_dialog_oppened():
