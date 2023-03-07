@@ -6,12 +6,14 @@ var gravity = 800
 var direction = Vector2.RIGHT
 var velocity = Vector2.ZERO
 var can_move = true
+var falling = false
 
 func _physics_process(delta):
 	if !can_move:
 		return
 	check_if_collides_with_player()
-	check_if_change_direction()
+	if !falling:
+		check_if_change_direction()
 	move(delta)
 	check_animation()
 
@@ -38,14 +40,17 @@ func check_if_ledge():
 	return false
 	
 func move(delta):
-	velocity = direction * speed
+	if !falling:
+		velocity = direction * speed
 	velocity.y += gravity * delta
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 func check_animation():
 	if (velocity.y > 0):
+		falling = true
 		$AnimatedSprite.play("falling")
 	else:
+		falling = false
 		$AnimatedSprite.play("walking")
 
 func check_if_collides_with_player():

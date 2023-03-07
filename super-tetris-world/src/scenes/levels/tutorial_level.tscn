@@ -247,6 +247,6 @@ position = Vector2( 104, 248 )
 anims/fade_in_text = SubResource( 3 )
 
 [node name="enemy2" parent="." index="12" instance=ExtResource( 3 )]
-position = Vector2( 476.795, 483.981 )
+position = Vector2( 464.059, 250.995 )
 
 [connection signal="body_entered" from="tutorial_enter_areas/tutorial_enter" to="." method="_on_tutorial_enter_body_entered"]
