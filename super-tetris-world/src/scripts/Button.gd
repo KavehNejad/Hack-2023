@@ -21,11 +21,11 @@ func set_button_sprite(this_button_texture):
 		$Sprite.texture = button_texture
 
 func _on_Area2D_body_entered(body):
-	if (player_triggered && body.is_in_group("Player")):
+	if (player_triggered && body.is_in_group("player")):
 		button_activated()
 	if (enemy_triggered && body.is_in_group("enemy")):
 		button_activated()
-	if (block_triggered && body.is_in_group("Block")):
+	if (block_triggered && body.is_in_group("block")):
 		button_activated()
 
 func button_activated():
