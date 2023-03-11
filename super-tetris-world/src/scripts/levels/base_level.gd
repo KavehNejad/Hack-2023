@@ -25,6 +25,7 @@ var tile_set_grid = []
 var shapes_types
 var shapes = []
 var current_shape
+var debug_labels = []
 
 var dialogue_displayed = false
 
@@ -187,7 +188,31 @@ func print_level():
 	print("\n\n===========================\n\n")
 
 
+func _display_level():
+	if len(debug_labels) == 0:
+		_create_debug_labels()
+	for y in range(20):
+		for x in range(50):
+			var label = debug_labels[y][x]
+			var string = "0"
+			if get_block_by_index(x, y):
+				string = str(get_block_by_index(x, y))
+			label.set_text(string)
+
+
+func _create_debug_labels():
+	for y in range(20):
+		debug_labels.append([])
+		for x in range(50):
+			var label = Label.new()
+			debug_labels[y].append(label)
+			label.set_position(Vector2(x * 64 - 32, y * 64 - 32))
+			add_child(label)
+
+
 func _on_Timer_timeout():
 	for shape in shapes:
 		shape.fall_down()
 	delete_lines()
+	if debug:
+		_display_level()
