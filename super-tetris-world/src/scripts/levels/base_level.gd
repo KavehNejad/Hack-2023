@@ -196,7 +196,10 @@ func _display_level():
 			var label = debug_labels[y][x]
 			var string = "0"
 			if get_block_by_index(x, y):
-				string = str(get_block_by_index(x, y))
+				if typeof(get_block_by_index(x, y)) == TYPE_INT:
+					string = "1"
+				else:
+					string = "B"
 			label.set_text(string)
 
 
