@@ -2,7 +2,7 @@ extends PathFollow2D
 
 onready var world = get_tree().get_nodes_in_group("base_world")[0]
 
-var speed = 6
+var speed = 64
 var flip = true
 
 var segments = []
@@ -43,11 +43,11 @@ func _set_positions():
 func _remove_from_grid():
 	for segment_pos in last_segments_positions:
 		if !(segment_pos in positions):
-			world.remove_block_by_indexs(segment_pos[0], segment_pos[1])
+			var indexs = world.get_pos_by_index({'x': segment_pos[0], 'y': segment_pos[1]})
+			world.remove_block(indexs['x'], indexs['y'])
 
 
 func _add_to_grid():
 	for position in positions:
-		world.add_block_by_indexs(
-			position[0], position[1], 1
-		)
+		var indexs = world.get_pos_by_index({'x': position[0], 'y': position[1]})
+		world.add_block(indexs['x'], indexs['y'], 1)

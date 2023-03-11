@@ -7,4 +7,6 @@
 ]]
 position = Vector2( 0.897278, 0.711151 )
 rotation = 0.00378785
+rotate = false
+loop = false
 script = ExtResource( 2 )
