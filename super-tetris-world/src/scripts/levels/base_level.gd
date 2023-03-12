@@ -26,6 +26,7 @@ var shapes_types
 var shapes = []
 var current_shape
 var debug_labels = []
+var collectables = {}
 
 var dialogue_displayed = false
 
@@ -131,6 +132,24 @@ func switch_game_mode():
 		current_shape.delete()
 		current_shape = null
 	emit_signal("game_mode_changed")
+
+
+func player_collected_item(item):
+	collectables[item]['collected'] = true
+
+
+func add_collectable(item):
+	collectables[item] = {
+		'collected': false,
+		'needed': item.needed
+	}
+
+
+func has_all_needed_collectables():
+	for collectable in collectables:
+		if collectables[collectable]['needed'] && !collectables[collectable]['collected']:
+			return false
+	return true
 
 
 func delete_lines():

@@ -27,6 +27,7 @@ func dialogue_removed():
 	$fade_text.play("fade_in_text")
 
 
+
 func _on_tutorial_enter_body_entered(body):
 	if (!tetris_dialogue_done):
 		var dialogue_instance = DIALOGUE.instance()
