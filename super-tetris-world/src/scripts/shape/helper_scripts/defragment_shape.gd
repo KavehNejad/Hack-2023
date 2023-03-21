@@ -25,8 +25,24 @@ func spawn_shape(blocks_in_shape):
 	var new_shape = shape_scene.instance()
 
 	set_new_shape_top_left(new_shape, blocks_in_shape)
+	var furthest_left = blocks_in_shape[0].global_position.x
+	var furthest_right = blocks_in_shape[0].global_position.x
+	var furthest_up = blocks_in_shape[0].global_position.y
+	var furthest_down = blocks_in_shape[0].global_position.y
+	
+	for block in blocks_in_shape:
+		if block.global_position.x > furthest_right:
+			furthest_right = block.global_position.x
+		if block.global_position.x < furthest_left:
+			furthest_left = block.global_position.x
+		if block.global_position.y > furthest_down:
+			furthest_down = block.global_position.y
+		if block.global_position.y < furthest_up:
+			furthest_up = block.global_position.y
+	var length = (furthest_right - furthest_left) / 64 + 1
+	var height = (furthest_down - furthest_up) / 64 + 1
 
-	var shape_layout = create_new_empty_shape_layout()
+	var shape_layout = create_new_empty_shape_layout(length, height)
 	for block in blocks_in_shape:
 		shape_layout = add_block_to_shape_layout(shape_layout, block, new_shape)
 	shape.world.add_child(new_shape)
@@ -43,11 +59,11 @@ func add_block_to_shape_layout(shape_layout, block, new_shape):
 	return shape_layout
 
 
-func create_new_empty_shape_layout():
+func create_new_empty_shape_layout(length, height):
 	var shape_layout = []
-	for _i in range(len(shape.layout)):
+	for _i in range(height):
 		shape_layout.append([])
-		for _x in range(len(shape.layout[0])):
+		for _x in range(length):
 			shape_layout[-1].append(0)
 	return shape_layout
 

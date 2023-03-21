@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/tilesets/default.tres" type="TileSet" id=1]
 [ext_resource path="res://src/scenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/scenes/base_level.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/scenes/Portal.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/scenes/collectable.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/scenes/spikes.tscn" type="PackedScene" id=6]
 
 [node name="LevelOne" instance=ExtResource( 3 )]
 
@@ -21,3 +22,6 @@ position = Vector2( 2018.05, 158.367 )
 
 [node name="Area2D" parent="." index="5" instance=ExtResource( 4 )]
 position = Vector2( 2977.44, 414.282 )
+
+[node name="spikes" parent="." index="7" instance=ExtResource( 6 )]
+position = Vector2( 479.215, 480.815 )

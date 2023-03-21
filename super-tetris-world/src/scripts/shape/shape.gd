@@ -23,14 +23,21 @@ func set_info(shape_info):
 	colour = shape_info['colour']
 	layout = shape_info['layout']
 	world.shapes.append(self)
+	# K and Z are used to handle rotation
+	var k = len(layout)
+	if k % 2 == 0:
+		k -= 1
+	var z = len(layout[0])
+	if z % 2 == 0:
+		z -= 1
 	for y in range(len(shape_info['layout'])):
 		for x in range(len(shape_info['layout'][y])):
 			if shape_info['layout'][y][x] == 1:
 				var block = block_scene.instance()
 				block.x_in_parent = x
 				block.y_in_parent = y
-				block.position.x = 64 * x# - int(len(layout)/2) * 64
-				block.position.y = 64 * y# - int(len(layout)/2) * 64
+				block.position.x = 64 * x - int(k/2) * 64
+				block.position.y = 64 * y - int(z/2) * 64
 				add_child(block)
 				block.get_node("Sprite").modulate = Color(shape_info['colour'])
 				blocks.append(block)
