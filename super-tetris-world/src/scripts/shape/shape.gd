@@ -174,6 +174,8 @@ func overlaps():
 	for block in blocks:
 		if is_instance_valid(block):
 			var indexs = world.get_block_index(block.global_position.x, block.global_position.y)
+			if indexs['x'] < 0 or indexs['y'] < 0:
+				return true
 			if world.get_block_by_index(indexs['x'], indexs['y']):
 				return true
 	return false

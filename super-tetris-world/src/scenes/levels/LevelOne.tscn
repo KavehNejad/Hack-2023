@@ -21,4 +21,3 @@ position = Vector2( 2018.05, 158.367 )
 
 [node name="Area2D" parent="." index="5" instance=ExtResource( 4 )]
 position = Vector2( 2977.44, 414.282 )
-needs_flag = true
