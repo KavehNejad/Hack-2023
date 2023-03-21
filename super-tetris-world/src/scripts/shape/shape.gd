@@ -158,7 +158,7 @@ func remove_block(block):
 		has_been_defragmented = true
 
 		blocks.erase(block)
-		world.remove_block(block.global_position.x, block.global_position.y)
+		world.remove_block(block.global_position.x, block.global_position.y, block)
 		defragment_shape_script.defragment_shape(self)
 		remove_from_grid()
 		delete()
@@ -168,7 +168,7 @@ func remove_block(block):
 func remove_from_grid():
 	for block in blocks:
 		if is_instance_valid(block):
-			world.remove_block(block.global_position.x, block.global_position.y)
+			world.remove_block(block.global_position.x, block.global_position.y, block)
 
 
 func add_to_grid():

@@ -197,9 +197,8 @@ func delete_lines():
 			if grid[y][x] && is_instance_valid(grid[y][x]) && tile_set_grid[y][x] == 0 && !grid[y][x].get_parent().current:
 				if start_of_line && x - start_of_line == 5:
 					for i in range(start_of_line, x):
-						print_level()
 						grid[y][i].destroy()
-					
+
 				elif start_of_line == null:
 					start_of_line = x
 			else:
@@ -230,9 +229,10 @@ func add_block(x, y, block):
 func get_pos_by_index(indexs):
 	return { 'x': indexs['x'] * 64, 'y': indexs['y'] * 64}
 
-func remove_block(x, y):
+func remove_block(x, y, block = null):
 	var indexs = get_block_index(x, y)
-	grid[indexs['y']][indexs['x']] = null
+	if block == null or grid[indexs['y']][indexs['x']] == block:
+		grid[indexs['y']][indexs['x']] = null
 
 
 func _on_touch_screen_switch_mode_pressed():
@@ -240,8 +240,10 @@ func _on_touch_screen_switch_mode_pressed():
 
 
 func print_level():
-	for y in range(6, 11):
-		print(grid[y])
+	for y in range(7, 10):
+		var line = grid[y].duplicate()
+		line = line.slice(0, 10)
+		print(line)
 	print("\n\n===========================\n\n")
 
 
