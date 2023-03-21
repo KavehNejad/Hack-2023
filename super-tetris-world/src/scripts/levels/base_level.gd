@@ -1,6 +1,8 @@
 extends Node
 
 signal game_mode_changed
+signal paused
+signal unpaused
 
 
 export(bool) var is_last = false
@@ -15,6 +17,7 @@ onready var shape_fall_timer = get_node("Timer")
 
 var set_up_blocks_script = load("res://src/scripts/set_up_block_types.gd").new()
 
+var paused = false
 var has_flag = false
 var tetris_dialogue_done = false
 var player_checkpoint_position 
@@ -40,7 +43,31 @@ func load_text(path):
 	return textArray
 
 
+func pause():
+	paused = true
+	emit_signal("paused")
+	$CanvasLayer/pause_menu.visible = true
+	$CanvasLayer/open_pause_menu_touchscreen_button.visible = false
+
+
+func unpause():
+	paused = false
+	emit_signal("unpaused")
+	$CanvasLayer/pause_menu.visible = false
+	$CanvasLayer/open_pause_menu_touchscreen_button.visible = true
+
+
+func toggle_pause():
+	if dialog_is_open:
+		return
+	if paused:
+		unpause()
+	else:
+		pause()
+
+
 func _ready():
+	connect_pause_signals()
 	connect("game_mode_changed", player, "on_game_mode_changed")
 	if is_last:
 		return
@@ -59,12 +86,18 @@ func _ready():
 		tile_set_grid[cell.y + 1][cell.x + 1] = 1
 
 
+func connect_pause_signals():
+	for node in get_tree().get_nodes_in_group("needs_to_stop_when_dialogue"):
+		connect("paused", node, "on_pause")
+		connect("unpaused", node, "on_unpaused")
+
+
 func connect_dialogue_signals(dialogue):
 	dialogue.connect("dialog_opened", self, "on_dialog_oppened")
 	dialogue.connect("dialog_clossed", self, "on_dialog_clossed")
 	for node in get_tree().get_nodes_in_group("needs_to_stop_when_dialogue"):
-		dialogue.connect("dialog_opened", node, "on_dialog_oppened")
-		dialogue.connect("dialog_clossed", node, "on_dialog_clossed")
+		dialogue.connect("dialog_opened", node, "on_paused")
+		dialogue.connect("dialog_clossed", node, "on_unpaused")
 
 
 func on_dialog_oppened():
@@ -113,6 +146,9 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("game_mode_switch"):
 		switch_game_mode()
+	
+	if Input.is_action_just_pressed("pause"):
+		toggle_pause()
 
 func switch_game_mode():
 	if dialog_is_open:
@@ -238,3 +274,7 @@ func _on_Timer_timeout():
 	delete_lines()
 	if debug:
 		_display_level()
+
+
+func _on_open_pause_menu_touchscreen_button_pressed():
+	pause()

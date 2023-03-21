@@ -26,7 +26,7 @@ func _ready():
 	min_jump_velocity = -sqrt(2 * gravity * min_jump_height)
 
 func _physics_process(delta):
-	if !(Global.game_mode == 'Tetris'):
+	if !(Global.game_mode == 'Tetris') and can_move:
 		_handle_movement(delta)
 	for body in $Area2D.get_overlapping_bodies():
 		if 'block' in body.get_groups() and body.get_parent() != world.current_shape:
@@ -121,12 +121,12 @@ func _on_touch_screen_up_pressed():
 		move('up')
 
 
-func on_dialog_oppened():
+func on_pause():
 	if Global.game_mode == 'Platformer':
 		$CanvasLayer/buttons.visible = false
 	can_move = false
 
-func on_dialog_clossed():
+func on_unpaused():
 	if Global.game_mode == 'Platformer':
 		$CanvasLayer/buttons.visible = true
 	can_move = true
