@@ -61,10 +61,10 @@ func check_if_collides_with_player():
 	return true
 
 
-func on_pause():
+func on_paused():
 	can_move = false
 	$AnimatedSprite.playing = false
 
-func on_unpause():
+func on_unpaused():
 	can_move = true
 	$AnimatedSprite.playing = true

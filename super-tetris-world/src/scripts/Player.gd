@@ -121,7 +121,7 @@ func _on_touch_screen_up_pressed():
 		move('up')
 
 
-func on_pause():
+func on_paused():
 	if Global.game_mode == 'Platformer':
 		$CanvasLayer/buttons.visible = false
 	can_move = false

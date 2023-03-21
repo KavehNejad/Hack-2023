@@ -88,7 +88,7 @@ func _ready():
 
 func connect_pause_signals():
 	for node in get_tree().get_nodes_in_group("needs_to_stop_when_dialogue"):
-		connect("paused", node, "on_pause")
+		connect("paused", node, "on_paused")
 		connect("unpaused", node, "on_unpaused")
 
 
