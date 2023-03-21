@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="super-tetris-world"
-run/main_scene="res://src/scenes/levels/tutorial_level.tscn"
+run/main_scene="res://src/scenes/level_select.tscn"
 config/icon="res://assets/images/icon.png"
 
 [autoload]

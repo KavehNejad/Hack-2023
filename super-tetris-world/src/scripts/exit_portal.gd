@@ -7,6 +7,6 @@ func _process(delta):
 		if body.is_in_group('player'):
 			if !world.has_all_needed_collectables():
 				return
-			Global.load_next_scene()
+			get_tree().change_scene("res://src/scenes/level_select.tscn")
 			queue_free()
 	
