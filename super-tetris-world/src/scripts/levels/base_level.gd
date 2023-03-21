@@ -71,6 +71,7 @@ func _ready():
 	connect("game_mode_changed", player, "on_game_mode_changed")
 	if is_last:
 		return
+	Global.game_mode = 'Platformer'
 	
 	_reset_values_from_checkpoint()
 
@@ -103,7 +104,7 @@ func _reset_values_from_checkpoint():
 					current_collectable.queue_free()
 
 	Global.collectables = null
-	Global.player_checkpoint_pos = null	
+	Global.player_checkpoint_pos = null
 
 func connect_pause_signals():
 	for node in get_tree().get_nodes_in_group("needs_to_stop_when_dialogue"):

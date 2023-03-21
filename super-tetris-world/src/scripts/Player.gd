@@ -38,6 +38,7 @@ func _handle_movement(delta):
 	check_if_key_pressed(delta)
 	velocity.y += gravity * delta
 	velocity = move_and_slide(velocity, Vector2.UP)
+
 	for i in get_slide_count():
 		if get_slide_collision(i).collider.is_in_group("enemy") && can_kill:
 			get_slide_collision(i).collider.queue_free()

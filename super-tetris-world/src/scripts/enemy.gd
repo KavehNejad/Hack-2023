@@ -56,7 +56,7 @@ func check_animation():
 func check_if_collides_with_player():
 	for i in range(get_slide_count()):
 		var collider = get_slide_collision(i).get_collider()
-		if (collider.is_in_group("Player")):
+		if (collider.is_in_group("player")):
 			collider.die()
 	return true
 
