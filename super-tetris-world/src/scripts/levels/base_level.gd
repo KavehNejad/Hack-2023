@@ -103,11 +103,13 @@ func connect_dialogue_signals(dialogue):
 func on_dialog_oppened():
 	dialog_is_open = true
 	shape_fall_timer.stop()
+	$CanvasLayer/open_pause_menu_touchscreen_button.visible = false
 
 
 func on_dialog_clossed():
 	dialog_is_open = false
 	shape_fall_timer.start()
+	$CanvasLayer/open_pause_menu_touchscreen_button.visible = true
 
 
 func on_player_died(): 
