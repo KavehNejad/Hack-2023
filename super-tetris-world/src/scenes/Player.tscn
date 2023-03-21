@@ -83,6 +83,11 @@ limit_bottom = 576
 wait_time = 0.1
 one_shot = true
 
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 6 )
+
 [connection signal="pressed" from="CanvasLayer/buttons/touch_screen_right" to="." method="_on_touch_screen_right_pressed"]
 [connection signal="released" from="CanvasLayer/buttons/touch_screen_right" to="." method="_on_touch_screen_right_released"]
 [connection signal="pressed" from="CanvasLayer/buttons/touch_screen_up" to="." method="_on_touch_screen_up_pressed"]

@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+onready var world = get_tree().get_nodes_in_group("base_world")[0]
+
 var gravity
 var max_jump_velocity
 var min_jump_velocity
@@ -24,8 +26,14 @@ func _ready():
 	min_jump_velocity = -sqrt(2 * gravity * min_jump_height)
 
 func _physics_process(delta):
-	if Global.game_mode == 'Tetris':
-		return
+	if !(Global.game_mode == 'Tetris'):
+		_handle_movement(delta)
+	for body in $Area2D.get_overlapping_bodies():
+		if 'block' in body.get_groups() and body.get_parent() != world.current_shape:
+			die()
+
+
+func _handle_movement(delta):
 	velocity.x = 0
 	check_if_key_pressed(delta)
 	velocity.y += gravity * delta
