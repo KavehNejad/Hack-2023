@@ -57,9 +57,18 @@ func fall_down():
 		position.y -= 64
 		if current:
 			stop_being_current()
+		if _in_no_place_zone():
+			delete()
 	add_to_grid()
 	add_indexs_to_blocks()
 
+
+func _in_no_place_zone():
+	for block in blocks:
+		for area in block.get_node('Area2D').get_overlapping_areas():
+			if 'no_place_zone' in area.get_groups():
+				return true
+	return false
 
 func add_indexs_to_blocks():
 	if !world.debug:

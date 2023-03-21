@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/tilesets/default.tres" type="TileSet" id=1]
 [ext_resource path="res://src/scenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/scenes/base_level.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/scenes/moving_platform_degment.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/scenes/moving_platform.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/scenes/no_place_zone.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -34,3 +35,14 @@ position = Vector2( 1.30315, -0.642426 )
 
 [node name="moving_platform_degment2" parent="Path2D/moving_platform" index="1" instance=ExtResource( 4 )]
 position = Vector2( 64.3319, -1.42639 )
+
+[node name="Area2D" parent="." index="6" instance=ExtResource( 6 )]
+
+[node name="CollisionPolygon2D" parent="Area2D" index="0"]
+polygon = PoolVector2Array( 19.3655, 237.887, 19.3655, 389.208, 153.716, 389.208, 157.958, 232.23 )
+
+[node name="Sprite" parent="Area2D" index="1"]
+position = Vector2( 88.3884, 313.955 )
+scale = Vector2( 2.08276, 2.45841 )
+
+[editable path="Area2D"]

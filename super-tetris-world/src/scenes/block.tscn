@@ -4,7 +4,7 @@
 [ext_resource path="res://src/scripts/shape/block.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 25.2056, 25.6406 )
+extents = Vector2( 30.4056, 28.9203 )
 
 [node name="block" type="KinematicBody2D" groups=[
 "block",
@@ -25,3 +25,8 @@ margin_bottom = 8.17296
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 1 )
