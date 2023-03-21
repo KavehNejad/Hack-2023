@@ -235,7 +235,7 @@ __meta__ = {
 }
 
 [node name="Checkpoint" parent="." index="7" instance=ExtResource( 9 )]
-position = Vector2( 2798.84, 208 )
+position = Vector2( 621.696, 449.905 )
 scale = Vector2( 1.5, 1.5 )
 
 [node name="enemy" parent="." index="8" instance=ExtResource( 3 )]
@@ -247,8 +247,14 @@ position = Vector2( 104, 248 )
 [node name="fade_text" type="AnimationPlayer" parent="." index="10"]
 anims/fade_in_text = SubResource( 3 )
 
-[node name="flag" parent="." index="12" instance=ExtResource( 12 )]
+[node name="flag2" parent="." index="12" instance=ExtResource( 12 )]
+position = Vector2( 830.751, 477.617 )
+needed = true
+collectable_name = "exit_portal_flag2"
+
+[node name="flag" parent="." index="13" instance=ExtResource( 12 )]
 position = Vector2( 422.13, 469.22 )
 needed = true
+collectable_name = "exit_portal_flag"
 
 [connection signal="body_entered" from="tutorial_enter_areas/tutorial_enter" to="." method="_on_tutorial_enter_body_entered"]

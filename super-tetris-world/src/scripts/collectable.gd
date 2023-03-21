@@ -3,6 +3,7 @@ extends Area2D
 onready var world = get_tree().get_nodes_in_group("base_world")[0]
 
 export(bool) var needed = false
+export(String) var collectable_name
 
 func _ready():
 	world.add_collectable(self)

@@ -71,6 +71,8 @@ func _ready():
 	connect("game_mode_changed", player, "on_game_mode_changed")
 	if is_last:
 		return
+	
+	_reset_values_from_checkpoint()
 
 	VisualServer.set_default_clear_color(Color("#2596be"))
 	player.connect("player_died", self, 'on_player_died')
@@ -85,6 +87,23 @@ func _ready():
 		grid[cell.y + 1][cell.x + 1] = 1
 		tile_set_grid[cell.y + 1][cell.x + 1] = 1
 
+
+func _reset_values_from_checkpoint():
+	if !Global.player_checkpoint_pos:
+		return
+
+	player.position = Global.player_checkpoint_pos
+
+	for collectable in Global.collectables.values():
+		if collectable['collected']:
+			for current_collectable in collectables:
+				var current_collectable_dict = collectables[current_collectable]
+				if current_collectable_dict['name'] == collectable['name']:
+					player_collected_item(current_collectable)
+					current_collectable.queue_free()
+
+	Global.collectables = null
+	Global.player_checkpoint_pos = null	
 
 func connect_pause_signals():
 	for node in get_tree().get_nodes_in_group("needs_to_stop_when_dialogue"):
@@ -116,7 +135,9 @@ func on_player_died():
 	revert_to_checkpoint()
 
 func revert_to_checkpoint():
-	player.position = player_checkpoint_position
+	Global.player_checkpoint_pos = player_checkpoint_position
+	Global.collectables = collectables
+	get_tree().reload_current_scene()
 
 func create_a_checkpoint():
 	player_checkpoint_position = player.position
@@ -179,7 +200,8 @@ func player_collected_item(item):
 func add_collectable(item):
 	collectables[item] = {
 		'collected': false,
-		'needed': item.needed
+		'needed': item.needed,
+		'name': item.collectable_name
 	}
 
 
