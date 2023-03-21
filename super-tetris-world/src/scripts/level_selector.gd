@@ -11,3 +11,4 @@ func set_up(info):
 	level_src = info['level_src']
 	$Label.text = info['level_src']
 	$TextureButton.texture_normal = load("res://assets/images/" + info['image_src'])
+	$TouchScreenButton.normal = load("res://assets/images/" + info['image_src'])
