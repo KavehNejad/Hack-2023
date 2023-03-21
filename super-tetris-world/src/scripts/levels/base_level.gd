@@ -48,15 +48,25 @@ func _ready():
 	VisualServer.set_default_clear_color(Color("#2596be"))
 	player.connect("player_died", self, 'on_player_died')
 	shapes_types = set_up_blocks_script.get_block_tyoes()
-	create_grid()
 	player.get_node("Camera2D").current = true
 
 	create_a_checkpoint()
 	
 	var all_cells = $TileMap.get_used_cells()
 	for cell in all_cells:
-		grid[cell.y + 1][cell.x + 1] = 1
-		tile_set_grid[cell.y + 1][cell.x + 1] = 1
+		var area2d = Area2D.new()
+		var shape = RectangleShape2D.new()
+		shape.set_extents(Vector2(64,64))
+		var collision = CollisionShape2D.new()
+		collision.set_shape(shape)
+
+		area2d.position.y = cell.y * 64 + 64 + 32
+		area2d.position.x = cell.x * 64
+		area2d.add_child(collision)
+		add_child(area2d)
+		area2d.add_to_group('tetris_collidable')
+#		grid[cell.y + 1][cell.x + 1] = 1
+#		tile_set_grid[cell.y + 1][cell.x + 1] = 1
 
 
 func connect_dialogue_signals(dialogue):
@@ -91,15 +101,12 @@ func spawn_shape():
 	current_shape.get_node("shape_camera").current = true
 	add_child(current_shape)
 	current_shape.set_info(get_next_block())
-	current_shape.position.x = (64 * player_x_index()) - 32
+	current_shape.position.x = int(player.position.x) - int(player.position.x) % 64
 	current_shape.position.y = 32
 	current_shape.current = true
 	current_shape.connect("block_bottom",self, "on_block_touch_bottom")
 	connect("game_mode_changed", current_shape, "on_game_mode_changed")
 
-
-func player_x_index():
-	return get_block_index(player.position.x, 0)['x']
 
 func get_next_block():
 	return shapes_types[rand_range(0,len(shapes_types))]
@@ -159,7 +166,6 @@ func delete_lines():
 			if grid[y][x] && is_instance_valid(grid[y][x]) && tile_set_grid[y][x] == 0 && !grid[y][x].get_parent().current:
 				if start_of_line && x - start_of_line == 5:
 					for i in range(start_of_line, x):
-						print_level()
 						grid[y][i].destroy()
 					
 				elif start_of_line == null:
@@ -168,73 +174,11 @@ func delete_lines():
 				start_of_line = null
 
 
-func create_grid():
-	for y in range(50):
-		grid.append([])
-		tile_set_grid.append([])
-		for _x in range(10000):
-			grid[y].append(null)
-			tile_set_grid[y].append(0)
-
-
-func get_block_index(x, y):
-	return { 'x': round(x / 64), 'y': round(y / 64) }
-
-func get_block_by_index(x, y):
-	return grid[y][x]
-
-func add_block(x, y, block):
-	var indexs = get_block_index(x, y)
-	grid[indexs['y']][indexs['x']] = block
-	return indexs
-
-
-func get_pos_by_index(indexs):
-	return { 'x': indexs['x'] * 64, 'y': indexs['y'] * 64}
-
-func remove_block(x, y):
-	var indexs = get_block_index(x, y)
-	grid[indexs['y']][indexs['x']] = null
-
-
 func _on_touch_screen_switch_mode_pressed():
 	switch_game_mode()
-
-
-func print_level():
-	for y in range(6, 11):
-		print(grid[y])
-	print("\n\n===========================\n\n")
-
-
-func _display_level():
-	if len(debug_labels) == 0:
-		_create_debug_labels()
-	for y in range(20):
-		for x in range(50):
-			var label = debug_labels[y][x]
-			var string = "0"
-			if get_block_by_index(x, y):
-				if typeof(get_block_by_index(x, y)) == TYPE_INT:
-					string = "1"
-				else:
-					string = "B"
-			label.set_text(string)
-
-
-func _create_debug_labels():
-	for y in range(20):
-		debug_labels.append([])
-		for x in range(50):
-			var label = Label.new()
-			debug_labels[y].append(label)
-			label.set_position(Vector2(x * 64 - 32, y * 64 - 32))
-			add_child(label)
 
 
 func _on_Timer_timeout():
 	for shape in shapes:
 		shape.fall_down()
-	delete_lines()
-	if debug:
-		_display_level()
+	# delete_lines()

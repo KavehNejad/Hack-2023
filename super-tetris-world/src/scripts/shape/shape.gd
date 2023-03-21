@@ -6,6 +6,8 @@ onready var world = get_parent()
 onready var touchscreen_buttons = get_node("CanvasLayer/buttons")
 
 var block_scene = preload("res://src/scenes/block.tscn")
+var detector_scene = preload("res://src/scenes/area_detector.tscn")
+
 var defragment_shape_script = load("res://src/scripts/shape/helper_scripts/defragment_shape.gd").new()
 var blocks = []
 var current = false
@@ -16,6 +18,8 @@ var rotations = [0, 90, 180, 270]
 var rotation_index = 0
 var has_been_defragmented = false
 var defragment_mutex = Mutex.new()
+var detector_shape
+var detectors
 
 
 
@@ -44,21 +48,21 @@ func on_game_mode_changed():
 
 
 func delete():
-	remove_from_grid()
 	world.shapes.erase(self)
 	if current:
 		stop_being_current()
 	queue_free()
 
 func fall_down():
-	remove_from_grid()
-	position.y += 64
-	if overlaps():
-		position.y -= 64
+	if !current:
+		return
+	if would_overlap('down'):
 		if current:
 			stop_being_current()
-	add_to_grid()
+	else:
+		move('down')
 	add_indexs_to_blocks()
+
 
 
 func add_indexs_to_blocks():
@@ -66,8 +70,7 @@ func add_indexs_to_blocks():
 		return
 
 	for block in blocks:
-		var indexs = world.get_block_index(block.global_position.x, block.global_position.y)
-		block.get_node('Label').set_text('x: ' + str(indexs['x']) + ' y: ' + str(indexs['y']))
+		block.get_node('Label').set_text(str(block.x_in_parent) + "," + str(block.y_in_parent))
 
 
 func stop_being_current():
@@ -76,9 +79,6 @@ func stop_being_current():
 	emit_signal("block_bottom")
 	world.disconnect("game_mode_changed", self, "on_game_mode_changed")
 	current = false
-
-func _ready():
-	add_to_grid()
 
 func _physics_process(delta):
 	if !current:
@@ -95,39 +95,18 @@ func _physics_process(delta):
 		delete()
 
 
-func move(direction):
+func move(direction, shape = self):
 	if Global.game_mode == 'Platformer' || !current:
 		return
 
 	if direction == 'right':
-		remove_from_grid()
-		position.x += 64
-		if overlaps():
-			position.x -= 64
-		add_to_grid()
+		shape.global_position.x += 64
 	if direction == 'left':
-		remove_from_grid()
-		position.x -= 64
-		if overlaps():
-			position.x += 64
-		add_to_grid()
+		shape.global_position.x -= 64
 	if direction == 'down':
-		fall_down()
+		shape.global_position.y += 64
 	if direction == 'rotate':
-		remove_from_grid()
-		rotation_index += 1
-		if rotation_index > 3:
-			rotation_index = 0
-		set_rotation(deg2rad(rotations[rotation_index]))
-		if overlaps():
-			rotation_index -= 1
-			if rotation_index < 0:
-				rotation_index = 3
-			set_rotation(deg2rad(rotations[rotation_index]))
-		add_to_grid()
-
-	if position.y > 600:
-		delete()
+		shape.rotate(deg2rad(90))
 
 func _on_touch_screen_left_pressed():
 	move('left')
@@ -144,30 +123,41 @@ func remove_block(block):
 		blocks.erase(block)
 		world.remove_block(block.global_position.x, block.global_position.y)
 		defragment_shape_script.defragment_shape(self)
-		remove_from_grid()
 		delete()
 	defragment_mutex.unlock()
 
 
-func remove_from_grid():
-	for block in blocks:
-		if is_instance_valid(block):
-			world.remove_block(block.global_position.x, block.global_position.y)
+func would_overlap(direction):
+	var detectors_and_shape = spawn_detector_shape()
+	var detectors = detectors_and_shape[0]
+	var detector_shape = detectors_and_shape[1]
+	move(direction, detector_shape)
+	for detector in detectors:
+		for body in detector.get_overlapping_bodies():
+			if body.is_in_group('tetris_collidable') and not body.get_class() == 'detector' and not body in blocks:
+				return true
 
-
-func add_to_grid():
-	for block in blocks:
-		if is_instance_valid(block):
-			world.add_block(round(block.global_position.x), round(block.global_position.y), block)
-
-
-func overlaps():
-	for block in blocks:
-		if is_instance_valid(block):
-			var indexs = world.get_block_index(block.global_position.x, block.global_position.y)
-			if world.get_block_by_index(indexs['x'], indexs['y']):
+		for area in detector.get_overlapping_areas():
+			if area.is_in_group('tetris_collidable'):
 				return true
 	return false
+
+
+func spawn_detector_shape():
+	if detector_shape == null:
+		detector_shape = Area2D.new()
+		detectors = []
+		for block in blocks:
+			var detector = detector_scene.instance()
+			detector.position = block.position
+			detectors.append(detector)
+			detector_shape.add_child(detector)
+		add_child(detector_shape)
+	else:
+		detector_shape.position = Vector2(0,0)
+		# detector_shape.rotation = rotation
+		print(rad2deg(rotation))
+	return [detectors, detector_shape]
 
 
 func _on_touch_screen_discard_pressed():

@@ -252,3 +252,5 @@ position = Vector2( 422.13, 469.22 )
 needed = true
 
 [connection signal="body_entered" from="tutorial_enter_areas/tutorial_enter" to="." method="_on_tutorial_enter_body_entered"]
+
+[editable path="flag"]

@@ -20,7 +20,6 @@ func _physics_process(delta):
 	_set_positions()
 	_add_to_grid()
 	_remove_from_grid()
-	world._display_level()
 
 
 func _set_positions():

@@ -4,18 +4,16 @@
 [ext_resource path="res://src/scripts/shape/block.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 25.2056, 25.6406 )
+extents = Vector2( 30.4056, 28.9203 )
 
 [node name="block" type="KinematicBody2D" groups=[
 "block",
+"tetris_collidable",
 ]]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
 
 [node name="Label" type="Label" parent="."]
 margin_left = -21.1892
@@ -25,3 +23,6 @@ margin_bottom = 8.17296
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="block_collision_shape" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
