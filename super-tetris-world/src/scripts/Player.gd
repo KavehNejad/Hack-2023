@@ -28,9 +28,8 @@ func _ready():
 func _physics_process(delta):
 	if !(Global.game_mode == 'Tetris') and can_move:
 		_handle_movement(delta)
-	for body in $Area2D.get_overlapping_bodies():
-		if 'block' in body.get_groups() and body.get_parent() != world.current_shape:
-			die()
+	
+	handle_death_by_block()
 
 
 func _handle_movement(delta):
@@ -38,23 +37,21 @@ func _handle_movement(delta):
 	check_if_key_pressed(delta)
 	velocity.y += gravity * delta
 	velocity = move_and_slide(velocity, Vector2.UP)
-
-	for i in get_slide_count():
-		if get_slide_collision(i).collider.is_in_group("enemy") && can_kill:
-			get_slide_collision(i).collider.queue_free()
-			velocity.y = max_jump_velocity
-	if is_on_floor():
-		can_kill = false
-		$Timer.start()
-	if position.y > 850:
-		die()
 	
-	if (velocity.x == 0):
-		$AnimatedSprite.stop()
-		$AnimatedSprite.frame = 0
-		$AnimatedSprite.play("walking")
-	if (velocity.y < 0):
-		$AnimatedSprite.play("jump")
+	handle_collisions()
+#	handle_floor_bug()
+	check_if_fell_in_abyss()
+	handle_animations()
+
+
+func handle_death_by_block():
+	for body in $Area2D.get_overlapping_bodies():
+		if 'block' in body.get_groups() and body.get_parent() != world.current_shape:
+			die()
+
+func handle_collisions():
+	for i in get_slide_count():
+		handle_enemy_collision(i)
 
 func die():
 	emit_signal("player_died")
@@ -62,6 +59,14 @@ func die():
 func check_if_key_pressed(delta):
 	if not Global.has_lost and not Global.game_paused:
 		handle_keyboard_movement(delta)
+
+func handle_animations():
+	if (velocity.x == 0):
+		$AnimatedSprite.stop()
+		$AnimatedSprite.frame = 0
+		$AnimatedSprite.play("walking")
+	if (velocity.y < 0):
+		$AnimatedSprite.play("jump")
 
 func handle_keyboard_movement(delta):
 	if Input.is_action_just_pressed("jump") and is_on_floor():
@@ -131,3 +136,23 @@ func on_unpaused():
 	if Global.game_mode == 'Platformer':
 		$CanvasLayer/buttons.visible = true
 	can_move = true
+	
+
+func handle_enemy_collision(i):
+	if get_slide_collision(i).collider.is_in_group("enemy") && can_kill:
+		print(velocity.y)
+		if (velocity.y > 0):
+			get_slide_collision(i).collider.queue_free()
+			yield(get_slide_collision(i).collider, "tree_exited")
+			velocity.y = max_jump_velocity
+		else:
+			die()
+
+func check_if_fell_in_abyss():
+	if position.y > 850:
+		die()
+
+func handle_floor_bug():
+	if is_on_floor():
+		can_kill = false
+		$Timer.start()
