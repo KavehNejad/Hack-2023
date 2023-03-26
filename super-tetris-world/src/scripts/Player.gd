@@ -39,7 +39,6 @@ func _handle_movement(delta):
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
 	handle_collisions()
-#	handle_floor_bug()
 	check_if_fell_in_abyss()
 	handle_animations()
 
@@ -152,7 +151,3 @@ func check_if_fell_in_abyss():
 	if position.y > 850:
 		die()
 
-func handle_floor_bug():
-	if is_on_floor():
-		can_kill = false
-		$Timer.start()
