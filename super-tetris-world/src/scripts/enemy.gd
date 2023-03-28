@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+onready var world = get_tree().get_nodes_in_group("base_world")[0]
+
 export var speed = 50
 var gravity = 800
 
@@ -12,12 +14,18 @@ var falling = false
 func _physics_process(delta):
 	if !can_move:
 		return
+	check_for_overlaping_tetris_blocks()
 	check_if_collides_with_player()
 	if !falling:
 		check_if_change_direction()
 	move(delta)
 	check_animation()
 
+
+func check_for_overlaping_tetris_blocks():
+	for body in $Area2D.get_overlapping_bodies():
+		if 'block' in body.get_groups() and body.get_parent() != world.current_shape:
+			queue_free()
 
 func check_if_change_direction():
 	if (check_if_wall() || check_if_ledge()):

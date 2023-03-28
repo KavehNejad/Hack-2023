@@ -41,7 +41,12 @@ func set_info(shape_info):
 				add_child(block)
 				block.get_node("Sprite").modulate = Color(shape_info['colour'])
 				blocks.append(block)
+	set_colision_disabled(true)
 
+
+func set_colision_disabled(enabled):
+	for block in blocks:
+		block.collision_shape.disabled = enabled
 
 func on_game_mode_changed():
 	if Global.game_mode == 'Platformer':
@@ -63,6 +68,7 @@ func fall_down():
 	if overlaps():
 		position.y -= 64
 		if current:
+			set_colision_disabled(false)
 			stop_being_current()
 		if _in_no_place_zone():
 			delete()
