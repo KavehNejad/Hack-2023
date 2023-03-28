@@ -1,0 +1,96 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://assets/images/robot-walking-Sheet.png" type="Texture" id=1]
+[ext_resource path="res://src/scripts/Player.gd" type="Script" id=2]
+[ext_resource path="res://assets/images/jump-robot.png" type="Texture" id=3]
+[ext_resource path="res://assets/images/block.png" type="Texture" id=5]
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 128, 130 )
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 128, 0, 128, 130 )
+
+[sub_resource type="AtlasTexture" id=3]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 256, 0, 128, 130 )
+
+[sub_resource type="AtlasTexture" id=4]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 384, 0, 128, 130 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "jump",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"loop": true,
+"name": "walking",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 36.1086
+height = 55.7828
+
+[node name="Player" type="KinematicBody2D" groups=[
+"needs_to_stop_when_dialogue",
+"player",
+]]
+script = ExtResource( 2 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="buttons" type="Node2D" parent="CanvasLayer"]
+
+[node name="touch_screen_right" type="TouchScreenButton" parent="CanvasLayer/buttons"]
+position = Vector2( 179.097, 472.809 )
+normal = ExtResource( 5 )
+visibility_mode = 1
+
+[node name="touch_screen_up" type="TouchScreenButton" parent="CanvasLayer/buttons"]
+position = Vector2( 863.585, 457.81 )
+normal = ExtResource( 5 )
+visibility_mode = 1
+
+[node name="touch_screen_left" type="TouchScreenButton" parent="CanvasLayer/buttons"]
+position = Vector2( 31.6901, 472.985 )
+normal = ExtResource( 5 )
+visibility_mode = 1
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 5 )
+animation = "walking"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 6 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_bottom = 576
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 6 )
+
+[connection signal="pressed" from="CanvasLayer/buttons/touch_screen_right" to="." method="_on_touch_screen_right_pressed"]
+[connection signal="released" from="CanvasLayer/buttons/touch_screen_right" to="." method="_on_touch_screen_right_released"]
+[connection signal="pressed" from="CanvasLayer/buttons/touch_screen_up" to="." method="_on_touch_screen_up_pressed"]
+[connection signal="pressed" from="CanvasLayer/buttons/touch_screen_left" to="." method="_on_touch_screen_left_pressed"]
+[connection signal="released" from="CanvasLayer/buttons/touch_screen_left" to="." method="_on_touch_screen_left_released"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

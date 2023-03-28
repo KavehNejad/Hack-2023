@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/tilesets/default.tres" type="TileSet" id=1]
+[ext_resource path="res://src/scenes/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/scenes/base_level.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/scenes/Portal.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/scenes/enemy.tscn" type="PackedScene" id=5]
+
+[node name="LevelTwo" instance=ExtResource( 3 )]
+
+[node name="Player" parent="." index="2" instance=ExtResource( 2 )]
+position = Vector2( 395.796, 435.102 )
+
+[node name="TileMap" type="TileMap" parent="." index="3"]
+tile_set = ExtResource( 1 )
+format = 1
+tile_data = PoolIntArray( 327692, 1, 0, 327693, 3, 0, 393228, 4, 0, 393229, 6, 0, 458764, 7, 0, 458765, 9, 0, 458772, 1, 0, 458773, 3, 0, 458780, 1, 0, 458781, 3, 0, 458787, 1, 0, 458788, 3, 0, 524288, 2, 0, 524289, 2, 0, 524290, 2, 0, 524291, 2, 0, 524292, 2, 0, 524293, 2, 0, 524294, 2, 0, 524295, 2, 0, 524296, 2, 0, 524297, 2, 0, 524298, 2, 0, 524299, 2, 0, 524300, 14, 0, 524301, 15, 0, 524302, 2, 0, 524303, 2, 0, 524304, 2, 0, 524305, 2, 0, 524306, 2, 0, 524307, 2, 0, 524308, 10, 0, 524309, 11, 0, 524310, 2, 0, 524311, 2, 0, 524312, 2, 0, 524313, 2, 0, 524314, 2, 0, 524315, 2, 0, 524316, 10, 0, 524317, 11, 0, 524318, 2, 0, 524319, 2, 0, 524320, 2, 0, 524321, 2, 0, 524322, 2, 0, 524323, 10, 0, 524324, 11, 0, 524325, 2, 0, 524326, 2, 0, 524327, 2, 0, 524328, 2, 0, 524329, 2, 0, 524330, 2, 0, 524331, 2, 0, 524332, 2, 0, 524333, 2, 0, 524334, 2, 0, 524335, 3, 0 )
+
+[node name="enemy2" parent="." index="4" instance=ExtResource( 5 )]
+position = Vector2( 1568.36, 477.08 )
+
+[node name="enemy" parent="." index="5" instance=ExtResource( 5 )]
+position = Vector2( 989.42, 475.683 )
+
+[node name="enemy4" parent="." index="6" instance=ExtResource( 5 )]
+position = Vector2( 1127.79, 476.214 )
+
+[node name="enemy3" parent="." index="7" instance=ExtResource( 5 )]
+position = Vector2( 2015.72, 477.701 )
+
+[node name="Area2D" parent="." index="8" instance=ExtResource( 4 )]
+position = Vector2( 2879.23, 423.812 )

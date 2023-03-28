@@ -1,0 +1,60 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.godot.game-mergeReleaseResources-9:/values-fa/values-fa.xml",
+            "map": [
+                {
+                    "source": "/home/kaveh/.gradle/caches/transforms-3/086694f904f7332915774462ffe124fb/transformed/core-1.2.0/res/values-fa/values-fa.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "128",
+                        "endColumns": "100",
+                        "endOffsets": "224"
+                    }
+                },
+                {
+                    "source": "/home/kaveh/.gradle/caches/transforms-3/0fa57c0f6a5b656a5e020e48cde123e3/transformed/jetified-godot-lib.release/res/values-fa/values-fa.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,109,183,241,301,370,440,618,791,893,972",
+                        "endColumns": "53,73,57,59,68,69,177,172,101,78,70",
+                        "endOffsets": "104,178,236,296,365,435,613,786,888,967,1038"
+                    },
+                    "to": {
+                        "startLines": "4,5,6,7,8,9,10,11,12,13,14",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "229,283,357,415,475,544,614,792,965,1067,1146",
+                        "endColumns": "53,73,57,59,68,69,177,172,101,78,70",
+                        "endOffsets": "278,352,410,470,539,609,787,960,1062,1141,1212"
+                    }
+                },
+                {
+                    "source": "/home/kaveh/personal_projects/Hack-2023/super-tetris-world/android/build/res/values-fa/godot_project_name_string.xml",
+                    "from": {
+                        "startLines": "3",
+                        "startColumns": "1",
+                        "startOffsets": "112",
+                        "endColumns": "69",
+                        "endOffsets": "180"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "72",
+                        "endOffsets": "123"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://assets/tilesets/default.tres" type="TileSet" id=1]
+[ext_resource path="res://src/scenes/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/scenes/base_level.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/scenes/moving_platform_degment.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/scenes/moving_platform.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/scenes/no_place_zone.tscn" type="PackedScene" id=6]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 223.932, 272.682, 0, 0, 0, 0, 223.932, 272.682, 0, 0, 0, 0, 223.932, 272.682, 0, 0, 0, 0, 496.682, 272.182, 0, 0, 0, 0, 354.904, 183.005, 0, 0, 0, 0, 302.341, 112.624, 0, 0, 0, 0, 494.775, 114.406, 0, 0, 0, 0, 656.919, 155.387, 0, 0, 0, 0, 733.536, 46.6975, 0, 0, 0, 0, 824.408, 231.114, 0, 0, 0, 0, 908.152, 307.731 )
+}
+
+[node name="TestLevel" instance=ExtResource( 3 )]
+debug = false
+
+[node name="TileMap" type="TileMap" parent="." index="3"]
+tile_set = ExtResource( 1 )
+format = 1
+tile_data = PoolIntArray( 393219, 2, 0, 393221, 1, 0, 393223, 1, 0, 393225, 1, 0, 393228, 1, 0, 393229, 2, 0, 393230, 2, 0, 393231, 2, 0, 458752, 2, 0, 458753, 2, 0, 458754, 2, 0, 458755, 2, 0, 458756, 2, 0, 458757, 2, 0, 458758, 2, 0, 458759, 2, 0, 458760, 2, 0, 458761, 2, 0, 458762, 2, 0, 458763, 2, 0, 458764, 10, 0, 458765, 5, 0, 458766, 5, 0, 458767, 5, 0, 524288, 5, 0, 524289, 5, 0, 524290, 5, 0, 524291, 5, 0, 524292, 5, 0, 524293, 5, 0, 524294, 5, 0, 524295, 5, 0, 524296, 5, 0, 524297, 5, 0, 524298, 5, 0, 524299, 5, 0, 524300, 16, 0, 524301, 8, 0, 524302, 8, 0, 524303, 8, 0 )
+
+[node name="Player" parent="." index="4" instance=ExtResource( 2 )]
+position = Vector2( 221.209, 176.475 )
+
+[node name="Path2D" type="Path2D" parent="." index="5"]
+curve = SubResource( 1 )
+
+[node name="moving_platform" parent="Path2D" index="0" instance=ExtResource( 5 )]
+position = Vector2( 223.932, 272.682 )
+rotation = 0.0166737
+
+[node name="moving_platform_degment" parent="Path2D/moving_platform" index="0" instance=ExtResource( 4 )]
+position = Vector2( 1.30315, -0.642426 )
+
+[node name="moving_platform_degment2" parent="Path2D/moving_platform" index="1" instance=ExtResource( 4 )]
+position = Vector2( 64.3319, -1.42639 )
+
+[node name="Area2D" parent="." index="6" instance=ExtResource( 6 )]
+
+[node name="CollisionPolygon2D" parent="Area2D" index="0"]
+polygon = PoolVector2Array( 19.3655, 237.887, 19.3655, 389.208, 153.716, 389.208, 157.958, 232.23 )
+
+[node name="Sprite" parent="Area2D" index="1"]
+position = Vector2( 88.3884, 313.955 )
+scale = Vector2( 2.08276, 2.45841 )
+
+[editable path="Area2D"]

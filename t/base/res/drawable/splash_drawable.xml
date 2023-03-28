@@ -1,0 +1,22 @@
+
+½
+9
+android*http://schemas.android.com/apk/res/android
+layer-list*
+
+	G*
+†item"~
+*http://schemas.android.com/apk/res/androiddrawable@drawable/splash_bg_color"(™ƒ„2"
+ €ødrawable/splash_bg_color*
+
+	6*¾
+µitem*
+		*“
+Šbitmap"I
+*http://schemas.android.com/apk/res/androidfiltertrue"(›‚„2:@"L
+*http://schemas.android.com/apk/res/androidgravitycenter"(¯„2:8"g
+*http://schemas.android.com/apk/res/androidsrc@drawable/splash"(™‚„2
+Œ€ødrawable/splash*
+
+	%*	
+	
