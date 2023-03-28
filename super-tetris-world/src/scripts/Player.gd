@@ -47,6 +47,7 @@ func handle_death_by_block():
 	for body in $Area2D.get_overlapping_bodies():
 		if 'block' in body.get_groups() and body.get_parent() != world.current_shape:
 			die()
+			return
 
 func handle_collisions():
 	for i in get_slide_count():
