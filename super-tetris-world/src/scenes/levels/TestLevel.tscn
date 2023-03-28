@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/tilesets/default.tres" type="TileSet" id=1]
 [ext_resource path="res://src/scenes/Player.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://src/scenes/moving_platform_degment.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/scenes/moving_platform.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/scenes/no_place_zone.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/scenes/enemy.tscn" type="PackedScene" id=7]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -17,8 +18,9 @@ debug = false
 
 [node name="TileMap" type="TileMap" parent="." index="3"]
 tile_set = ExtResource( 1 )
+show_collision = true
 format = 1
-tile_data = PoolIntArray( 393219, 2, 0, 393221, 1, 0, 393223, 1, 0, 393225, 1, 0, 393228, 1, 0, 393229, 2, 0, 393230, 2, 0, 393231, 2, 0, 458752, 2, 0, 458753, 2, 0, 458754, 2, 0, 458755, 2, 0, 458756, 2, 0, 458757, 2, 0, 458758, 2, 0, 458759, 2, 0, 458760, 2, 0, 458761, 2, 0, 458762, 2, 0, 458763, 2, 0, 458764, 10, 0, 458765, 5, 0, 458766, 5, 0, 458767, 5, 0, 524288, 5, 0, 524289, 5, 0, 524290, 5, 0, 524291, 5, 0, 524292, 5, 0, 524293, 5, 0, 524294, 5, 0, 524295, 5, 0, 524296, 5, 0, 524297, 5, 0, 524298, 5, 0, 524299, 5, 0, 524300, 16, 0, 524301, 8, 0, 524302, 8, 0, 524303, 8, 0 )
+tile_data = PoolIntArray( 327694, 2, 0, 327695, 2, 0, 393225, 2, 0, 393231, 2, 0, 458752, 2, 0, 458753, 2, 0, 458754, 2, 0, 458755, 2, 0, 458756, 2, 0, 458757, 2, 0, 458758, 2, 0, 458759, 2, 0, 458760, 2, 0, 458761, 2, 0, 458762, 2, 0, 458763, 2, 0, 458764, 2, 0, 458765, 2, 0, 458766, 2, 0, 458767, 2, 0 )
 
 [node name="Player" parent="." index="4" instance=ExtResource( 2 )]
 position = Vector2( 221.209, 176.475 )
@@ -44,5 +46,8 @@ polygon = PoolVector2Array( 19.3655, 237.887, 19.3655, 389.208, 153.716, 389.208
 [node name="Sprite" parent="Area2D" index="1"]
 position = Vector2( 88.3884, 313.955 )
 scale = Vector2( 2.08276, 2.45841 )
+
+[node name="enemy" parent="." index="7" instance=ExtResource( 7 )]
+position = Vector2( 792, 352 )
 
 [editable path="Area2D"]

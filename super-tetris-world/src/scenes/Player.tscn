@@ -27,14 +27,14 @@ region = Rect2( 384, 0, 128, 130 )
 
 [sub_resource type="SpriteFrames" id=5]
 animations = [ {
-"frames": [ ExtResource( 3 ) ],
-"loop": true,
-"name": "jump",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
 "loop": true,
 "name": "walking",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "jump",
 "speed": 5.0
 } ]
 
@@ -79,10 +79,6 @@ limit_left = 0
 limit_top = 0
 limit_bottom = 576
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.1
-one_shot = true
-
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
@@ -93,4 +89,3 @@ shape = SubResource( 6 )
 [connection signal="pressed" from="CanvasLayer/buttons/touch_screen_up" to="." method="_on_touch_screen_up_pressed"]
 [connection signal="pressed" from="CanvasLayer/buttons/touch_screen_left" to="." method="_on_touch_screen_left_pressed"]
 [connection signal="released" from="CanvasLayer/buttons/touch_screen_left" to="." method="_on_touch_screen_left_released"]
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
