@@ -3,7 +3,7 @@ extends Node
 signal game_mode_changed
 signal paused
 signal unpaused
-
+signal star_collected
 
 export(bool) var is_last = false
 export(bool) var debug = false
@@ -181,28 +181,40 @@ func switch_game_mode():
 		Global.game_mode = 'Tetris'
 		player.get_node("Camera2D").current = false
 		spawn_shape()
+		toggle_node_visibility_tetris_mode(false)
 		$AudioStreamPlayer2D.play()
 		VisualServer.set_default_clear_color(Color("#000000"))
 	else:
 		Global.game_mode = 'Platformer'
 		player.get_node("Camera2D").current = true
 		$AudioStreamPlayer2D.stop()
-		VisualServer.set_default_clear_color(Color("#2596be"))
+		toggle_node_visibility_tetris_mode(true)
 		current_shape.disconnect("block_bottom",self, "on_block_touch_bottom")
 		current_shape.delete()
 		current_shape = null
 	emit_signal("game_mode_changed")
 
+func toggle_node_visibility_tetris_mode(is_visible):
+	for node in get_tree().get_nodes_in_group("invisible_in_tetris_mode"):
+		node.visible = is_visible
+
 
 func player_collected_item(item):
 	collectables[item]['collected'] = true
+	handle_star_collecting(item)
+
+
+func handle_star_collecting(item):
+	if (item.type == "Star"):
+		emit_signal("star_collected")
 
 
 func add_collectable(item):
 	collectables[item] = {
 		'collected': false,
 		'needed': item.needed,
-		'name': item.collectable_name
+		'name': item.collectable_name,
+		'type': item.type
 	}
 
 

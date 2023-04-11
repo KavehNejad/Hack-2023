@@ -62,11 +62,11 @@ func check_if_key_pressed(delta):
 
 func handle_animations():
 	if (velocity.x == 0):
-		$AnimatedSprite.stop()
-		$AnimatedSprite.frame = 0
-		$AnimatedSprite.play("walking")
-	if (velocity.y < 0):
-		$AnimatedSprite.play("jump")
+		$AnimatedSprite.play("idle")
+	if (velocity.y < 0 and !is_on_floor()):
+		$AnimatedSprite.play("go_up")
+	if (velocity.y > 0 and !is_on_floor()):
+		$AnimatedSprite.play("go_down")
 
 func handle_keyboard_movement(delta):
 	if Input.is_action_just_pressed("jump") and is_on_floor():

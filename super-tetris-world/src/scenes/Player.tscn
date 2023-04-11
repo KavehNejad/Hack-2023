@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://assets/images/player/player-jump.png" type="Texture" id=1]
 [ext_resource path="res://src/scripts/Player.gd" type="Script" id=2]
@@ -61,6 +61,11 @@ flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 132, 128 )
 
+[sub_resource type="AtlasTexture" id=25]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 132, 0, 132, 128 )
+
 [sub_resource type="SpriteFrames" id=12]
 animations = [ {
 "frames": [ SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ) ],
@@ -75,7 +80,12 @@ animations = [ {
 }, {
 "frames": [ SubResource( 24 ) ],
 "loop": true,
-"name": "jump",
+"name": "go_up",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 25 ) ],
+"loop": true,
+"name": "go_down",
 "speed": 5.0
 } ]
 
@@ -110,7 +120,7 @@ visibility_mode = 1
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 12 )
-animation = "idle"
+animation = "go_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 18.973 )
