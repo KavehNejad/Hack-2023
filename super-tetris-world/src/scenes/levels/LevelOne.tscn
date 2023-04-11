@@ -70,7 +70,7 @@ type = "Star"
 scale = Vector2( 0.3, 0.3 )
 frames = ExtResource( 8 )
 animation = "star-floating"
-frame = 17
+frame = 14
 playing = true
 
 [node name="AudioStreamPlayer2D" parent="Star1" index="2"]
@@ -85,7 +85,7 @@ type = "Star"
 scale = Vector2( 0.3, 0.3 )
 frames = ExtResource( 8 )
 animation = "star-floating"
-frame = 19
+frame = 16
 playing = true
 
 [node name="AudioStreamPlayer2D" parent="Star2" index="2"]
@@ -101,7 +101,7 @@ position = Vector2( 0, -1 )
 scale = Vector2( 0.3, 0.3 )
 frames = ExtResource( 8 )
 animation = "star-floating"
-frame = 12
+frame = 9
 playing = true
 
 [node name="AudioStreamPlayer2D" parent="Star3" index="2"]
