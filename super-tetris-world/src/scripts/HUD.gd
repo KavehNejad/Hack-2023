@@ -10,8 +10,10 @@ func _ready():
 func _on_star_collected():
 	if (stars_collected == 0):
 		$StarsFull.visible = true
-		$StarsFull.size.x = 320
+		$StarsFull.rect_size.x = 320
+		stars_collected = 1
 	elif (stars_collected == max_stars):
 		pass
 	else:
-		$StarsFull.size.x += 320
+		$StarsFull.rect_size.x += 320
+		stars_collected += 1

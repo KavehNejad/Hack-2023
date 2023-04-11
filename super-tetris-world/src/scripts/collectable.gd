@@ -12,7 +12,8 @@ func _ready():
 
 func _process(delta):
 	for body in get_overlapping_bodies():
-		if body.is_in_group('player'):
+		if (body.is_in_group('player') && !collected):
+			collected = true
 			$AudioStreamPlayer2D.play()
 			$AnimatedSprite.play("item-collected")
 
