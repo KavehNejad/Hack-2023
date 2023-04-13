@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/images/block.png" type="Texture" id=1]
 [ext_resource path="res://src/scenes/pause_menu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/scripts/levels/base_level.gd" type="Script" id=3]
 [ext_resource path="res://src/scenes/HUD.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/scenes/levels/helpers/testris_handler.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/scenes/levels/helpers/collectable_handler.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/audio/tetris_theme.mp3" type="AudioStream" id=7]
 
 [node name="base_world" type="Node" groups=[
@@ -36,5 +37,8 @@ max_distance = 1.0
 
 [node name="tetris_handler" parent="." instance=ExtResource( 5 )]
 
+[node name="collectable_handler" parent="." instance=ExtResource( 6 )]
+
 [connection signal="pressed" from="CanvasLayer/touch_screen_switch_mode" to="." method="_on_touch_screen_switch_mode_pressed"]
 [connection signal="pressed" from="CanvasLayer/open_pause_menu_touchscreen_button" to="." method="_on_open_pause_menu_touchscreen_button_pressed"]
+[connection signal="star_collected" from="collectable_handler" to="HUD" method="_on_star_collected"]

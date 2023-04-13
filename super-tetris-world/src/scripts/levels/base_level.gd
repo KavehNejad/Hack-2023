@@ -1,11 +1,11 @@
 extends Node
 
 onready var tetris_handler = get_node('tetris_handler')
+onready var collectable_handler = get_node('collectable_handler')
 
 signal game_mode_changed
 signal paused
 signal unpaused
-signal star_collected
 
 export(bool) var is_last = false
 export(bool) var debug = false
@@ -23,7 +23,6 @@ var dialog_is_open = false
 
 
 var debug_labels = []
-var collectables = {}
 
 var dialogue_displayed = false
 
@@ -81,16 +80,9 @@ func _reset_values_from_checkpoint():
 		return
 
 	player.position = Global.player_checkpoint_pos
+	
+	collectable_handler.reset_collectables_from_checkpoint()
 
-	for collectable in Global.collectables.values():
-		if collectable['collected']:
-			for current_collectable in collectables:
-				var current_collectable_dict = collectables[current_collectable]
-				if current_collectable_dict['name'] == collectable['name']:
-					player_collected_item(current_collectable)
-					current_collectable.queue_free()
-
-	Global.collectables = null
 	Global.player_checkpoint_pos = null
 
 
@@ -126,12 +118,12 @@ func on_player_died():
 
 func revert_to_checkpoint():
 	Global.player_checkpoint_pos = player_checkpoint_position
-	Global.collectables = collectables
 	get_tree().reload_current_scene()
 
 
 func create_a_checkpoint():
 	player_checkpoint_position = player.position
+	collectable_handler.create_checkpoint()
 
 
 func player_x_index():
@@ -174,32 +166,6 @@ func switch_game_mode():
 func toggle_node_visibility_tetris_mode(is_visible):
 	for node in get_tree().get_nodes_in_group("invisible_in_tetris_mode"):
 		node.visible = is_visible
-
-
-func player_collected_item(item):
-	collectables[item]['collected'] = true
-	handle_star_collecting(item)
-
-
-func handle_star_collecting(item):
-	if (item.type == "Star"):
-		emit_signal("star_collected")
-
-
-func add_collectable(item):
-	collectables[item] = {
-		'collected': false,
-		'needed': item.needed,
-		'name': item.collectable_name,
-		'type': item.type
-	}
-
-
-func has_all_needed_collectables():
-	for collectable in collectables:
-		if collectables[collectable]['needed'] && !collectables[collectable]['collected']:
-			return false
-	return true
 
 
 func get_block_index(x, y):

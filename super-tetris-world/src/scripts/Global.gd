@@ -6,4 +6,4 @@ var tile_size = 64
 var game_mode = 'Platformer' # or Tetris 
 var is_demo = false
 var player_checkpoint_pos
-var collectables
+var collected_collectable_names = []
