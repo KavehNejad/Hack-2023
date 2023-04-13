@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://assets/tilesets/sunnyland.tres" type="TileSet" id=1]
 [ext_resource path="res://src/scenes/Player.tscn" type="PackedScene" id=2]
@@ -9,7 +9,6 @@
 [ext_resource path="res://assets/worlds/sunnyWorld/backgrounds/sunnyland_middle.png" type="Texture" id=7]
 [ext_resource path="res://assets/animations/collectible.tres" type="SpriteFrames" id=8]
 [ext_resource path="res://assets/audio/star_collected.wav" type="AudioStream" id=9]
-[ext_resource path="res://src/scenes/checkpoint_pole.tscn" type="PackedScene" id=10]
 
 [node name="LevelOne" instance=ExtResource( 3 )]
 
@@ -71,7 +70,7 @@ type = "Star"
 scale = Vector2( 0.3, 0.3 )
 frames = ExtResource( 8 )
 animation = "star-floating"
-frame = 13
+frame = 19
 playing = true
 
 [node name="AudioStreamPlayer2D" parent="Star1" index="2"]
@@ -86,7 +85,7 @@ type = "Star"
 scale = Vector2( 0.3, 0.3 )
 frames = ExtResource( 8 )
 animation = "star-floating"
-frame = 15
+frame = 21
 playing = true
 
 [node name="AudioStreamPlayer2D" parent="Star2" index="2"]
@@ -102,7 +101,7 @@ position = Vector2( 0, -1 )
 scale = Vector2( 0.3, 0.3 )
 frames = ExtResource( 8 )
 animation = "star-floating"
-frame = 8
+frame = 14
 playing = true
 
 [node name="AudioStreamPlayer2D" parent="Star3" index="2"]
@@ -110,18 +109,6 @@ stream = ExtResource( 9 )
 
 [node name="Player" parent="." index="14" instance=ExtResource( 2 )]
 position = Vector2( 392, 320 )
-
-[node name="Checkpoint" parent="." index="15" instance=ExtResource( 10 )]
-position = Vector2( 1681.9, 352.398 )
-checkpoint_name = "checkpoint 1"
-
-[node name="Checkpoint2" parent="." index="16" instance=ExtResource( 10 )]
-position = Vector2( 2486.53, 221.583 )
-checkpoint_name = "checkpoint 2"
-
-[node name="Checkpoint3" parent="." index="17" instance=ExtResource( 10 )]
-position = Vector2( 5295.15, -321.475 )
-checkpoint_name = "checkpoint 3"
 
 [editable path="Star1"]
 [editable path="Star2"]
