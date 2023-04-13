@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/scripts/levels/helpers/testris_handler.gd" type="Script" id=1]
+
+[node name="tetris_handler" type="Node"]
+script = ExtResource( 1 )
+
+[node name="tetris_timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="tetris_timer" to="." method="_on_tetris_timer_timeout"]

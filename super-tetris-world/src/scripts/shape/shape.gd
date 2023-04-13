@@ -2,7 +2,8 @@ extends Node2D
 
 signal block_bottom #block touched bottom
 
-onready var world = get_parent()
+onready var world = get_tree().get_nodes_in_group("base_world")[0]
+onready var tetris_handler = get_parent()
 onready var touchscreen_buttons = get_node("CanvasLayer/buttons")
 
 var block_scene = preload("res://src/scenes/block.tscn")
@@ -22,7 +23,7 @@ var defragment_mutex = Mutex.new()
 func set_info(shape_info):
 	colour = shape_info['colour']
 	layout = shape_info['layout']
-	world.shapes.append(self)
+	tetris_handler.shapes.append(self)
 	# K and Z are used to handle rotation
 	var k = len(layout)
 	if k % 2 == 0:
@@ -57,7 +58,7 @@ func on_game_mode_changed():
 
 func delete():
 	remove_from_grid()
-	world.shapes.erase(self)
+	tetris_handler.shapes.erase(self)
 	if current:
 		stop_being_current()
 	queue_free()
