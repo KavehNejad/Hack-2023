@@ -18,7 +18,6 @@ func player_collected_item(item):
 	handle_star_collecting(item)
 
 
-
 func handle_star_collecting(item):
 	if (item.type == "Star"):
 		emit_signal("star_collected")

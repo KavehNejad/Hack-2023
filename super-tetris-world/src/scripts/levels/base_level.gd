@@ -85,6 +85,10 @@ func _reset_values_from_checkpoint():
 
 	Global.player_checkpoint_pos = null
 
+	for checkpoint in get_tree().get_nodes_in_group("checkpoint"):
+		if checkpoint.checkpoint_name in Global.used_checkpoint_names:
+			checkpoint.raise_flag()
+
 
 func connect_pause_signals():
 	for node in get_tree().get_nodes_in_group("needs_to_stop_when_dialogue"):
