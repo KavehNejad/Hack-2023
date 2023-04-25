@@ -8,3 +8,7 @@ var is_demo = false
 var player_checkpoint_pos
 var collected_collectable_names = []
 var used_checkpoint_names = []
+
+var progress = {
+	"levels": {}
+}

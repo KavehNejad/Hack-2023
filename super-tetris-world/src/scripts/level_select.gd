@@ -1,9 +1,10 @@
 extends Control
 
 onready var level_selector_scene = load("res://src/scenes/level_selector.tscn")
-
+var save_state = load("res://src/scripts/save_state.gd").new()
 
 func _ready():
+	save_state.load_state()
 	set_levels()
 
 func level_selected(level):

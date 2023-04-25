@@ -5,13 +5,32 @@ signal star_collected
 var collectables = []
 
 func reset_collectables_from_checkpoint():
-	for collectable_name in Global.collected_collectable_names:
+	var array_of_collected_names = Global.collected_collectable_names
+	reset_collectables(array_of_collected_names)
+	Global.collected_collectable_names = []
+
+
+func reset_stars_from_save_file(level_name):
+	var array_of_collected_names = Global.progress['levels'][level_name]['stars_collected']
+	reset_collectables(array_of_collected_names)
+
+
+func collected_star_names():
+	var names = []
+	for item in collectables:
+		if item.collected and item.type == "Star":
+			names.append(item.name)
+	return names
+
+
+func reset_collectables(array_of_collected_names):
+	for collectable_name in array_of_collected_names:
 		for current_collectable in collectables:
 			if current_collectable.name == collectable_name:
 				player_collected_item(current_collectable)
 				current_collectable.collected = true
 				current_collectable.get_parent().remove_child(current_collectable)
-	Global.collected_collectable_names = []
+
 
 
 func player_collected_item(item):

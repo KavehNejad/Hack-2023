@@ -2,6 +2,7 @@ extends Node
 
 onready var tetris_handler = get_node('tetris_handler')
 onready var collectable_handler = get_node('collectable_handler')
+var save_state = load("res://src/scripts/save_state.gd").new()
 
 signal game_mode_changed
 signal paused
@@ -14,6 +15,7 @@ export(bool) var debug = false
 const DIALOGUE = preload("res://src/scenes/Dialogue.tscn")
 
 onready var player = get_node('Player')
+onready var level_name = get_tree().get_current_scene().get_name()
 
 var paused = false
 var has_flag = false
@@ -25,6 +27,22 @@ var dialog_is_open = false
 var debug_labels = []
 
 var dialogue_displayed = false
+
+func reset_starts_from_saved_data():
+	initialize_level_in_global_progress()
+	collectable_handler.reset_stars_from_save_file(level_name)
+
+
+func initialize_level_in_global_progress():
+	var global_level_names = Global.progress['levels'].keys()
+	if !(level_name in global_level_names):
+		Global.progress['levels'][level_name] = {
+			"stars_collected": []
+		}
+
+func entered_exit_portal():
+	Global.progress['levels'][level_name]['stars_collected'] = collectable_handler.collected_star_names()
+	save_state.save_state()
 
 
 func load_text(path):
@@ -72,6 +90,7 @@ func _ready():
 	player.connect("player_died", self, 'on_player_died')
 	player.get_node("Camera2D").current = true
 
+	reset_starts_from_saved_data()
 	create_a_checkpoint()
 
 
