@@ -172,13 +172,14 @@ func switch_game_mode():
 		player.get_node("Camera2D").current = false
 		tetris_handler.spawn_shape()
 		toggle_node_visibility_tetris_mode(false)
-		$AudioStreamPlayer2D.play()
+
+		$tetris_music_player.play()
 		VisualServer.set_default_clear_color(Color("#000000"))
 	else:
 		VisualServer.set_default_clear_color(Color("#2596be"))
 		Global.game_mode = 'Platformer'
 		player.get_node("Camera2D").current = true
-		$AudioStreamPlayer2D.stop()
+		$tetris_music_player.stop()
 		toggle_node_visibility_tetris_mode(true)
 		tetris_handler.current_shape.disconnect("block_bottom", tetris_handler, "on_block_touch_bottom")
 		tetris_handler.current_shape.delete()

@@ -19,7 +19,7 @@ var current_shape
 func _ready():
 	shapes_types = set_up_blocks_script.get_block_tyoes()
 	create_grid()
-	var all_cells = world.get_node('TileMap').get_used_cells()
+	var all_cells = world.get_node('map_objects').get_node('TileMap').get_used_cells()
 	for cell in all_cells:
 		grid[cell.y + 1][cell.x + 1] = 1
 		tile_set_grid[cell.y + 1][cell.x + 1] = 1

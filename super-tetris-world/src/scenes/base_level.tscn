@@ -29,15 +29,19 @@ position = Vector2( 962.751, 3.77551 )
 normal = ExtResource( 1 )
 visibility_mode = 1
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="tetris_music_player" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 7 )
-max_distance = 1.0
+volume_db = 1.0
+max_distance = 9.22337e+18
 
 [node name="HUD" parent="." instance=ExtResource( 4 )]
 
 [node name="tetris_handler" parent="." instance=ExtResource( 5 )]
 
 [node name="collectable_handler" parent="." instance=ExtResource( 6 )]
+
+[node name="map_objects" type="Node2D" parent="."]
+z_index = -1
 
 [connection signal="pressed" from="CanvasLayer/touch_screen_switch_mode" to="." method="_on_touch_screen_switch_mode_pressed"]
 [connection signal="pressed" from="CanvasLayer/open_pause_menu_touchscreen_button" to="." method="_on_open_pause_menu_touchscreen_button_pressed"]
