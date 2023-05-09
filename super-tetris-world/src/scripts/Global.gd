@@ -8,7 +8,9 @@ var is_demo = false
 var player_checkpoint_pos
 var collected_collectable_names = []
 var used_checkpoint_names = []
+var music_volume = 50
 
 var progress = {
-	"levels": {}
+	"levels": {},
+	"music_volume": music_volume
 }

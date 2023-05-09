@@ -7,6 +7,7 @@ var save_state = load("res://src/scripts/save_state.gd").new()
 signal game_mode_changed
 signal paused
 signal unpaused
+signal volume_changed
 
 export(bool) var is_last = false
 export(bool) var debug = false
@@ -172,7 +173,6 @@ func switch_game_mode():
 		player.get_node("Camera2D").current = false
 		tetris_handler.spawn_shape()
 		toggle_node_visibility_tetris_mode(false)
-
 		$tetris_music_player.play()
 		VisualServer.set_default_clear_color(Color("#000000"))
 	else:

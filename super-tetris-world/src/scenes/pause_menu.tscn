@@ -31,6 +31,17 @@ margin_right = 627.08
 margin_bottom = 454.447
 text = "level_select"
 
+[node name="HSlider" type="HSlider" parent="."]
+margin_left = 428.519
+margin_top = 485.151
+margin_right = 646.519
+margin_bottom = 552.151
+value = 50.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="button_down" from="un_pause" to="." method="_on_un_pause_button_down"]
 [connection signal="button_down" from="reset_to_checkpoint" to="." method="_on_reset_to_checkpoint_button_down"]
 [connection signal="button_down" from="move_to_level_select" to="." method="_on_move_to_level_select_button_down"]
+[connection signal="value_changed" from="HSlider" to="." method="_on_HSlider_value_changed"]
