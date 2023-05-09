@@ -3,7 +3,7 @@ extends Node2D
 signal block_bottom #block touched bottom
 
 onready var world = get_tree().get_nodes_in_group("base_world")[0]
-onready var tetris_handler = get_parent()
+onready var tetris_handler = world.get_node('tetris_handler')
 onready var touchscreen_buttons = get_node("CanvasLayer/buttons")
 
 var block_scene = preload("res://src/scenes/block.tscn")
@@ -42,7 +42,7 @@ func set_info(shape_info):
 				add_child(block)
 				block.get_node("Sprite").modulate = Color(shape_info['colour'])
 				blocks.append(block)
-	set_colision_disabled(true)
+	set_colision_disabled(false)
 
 
 func set_colision_disabled(enabled):

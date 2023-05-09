@@ -52,19 +52,40 @@ func on_block_touch_bottom():
 	spawn_shape()
 
 
-func delete_lines():
-	var start_of_line = null
-	for y in range(len(grid)):
-		for x in range(len(grid[y])):
-			if grid[y][x] && is_instance_valid(grid[y][x]) && tile_set_grid[y][x] == 0 && !grid[y][x].get_parent().current:
-				if start_of_line && x - start_of_line == 5:
-					for i in range(start_of_line, x):
-						grid[y][i].destroy()
+func get_all_block_positions_without_current_shape():
+	var blocks = []
+	for shape in shapes:
+		if !current_shape == shape:
+			blocks += shape.blocks
+	var block_positions = []
+	for block in blocks:
+		block_positions.append(world.get_block_index(
+			block.global_position.x, block.global_position.y
+		))
+	return block_positions
 
-				elif start_of_line == null:
-					start_of_line = x
-			else:
-				start_of_line = null
+
+func delete_lines():
+	var positions_to_check = get_all_block_positions_without_current_shape()
+	var blocks_on_line = {}
+	for position in positions_to_check:
+		var y = position['y']
+		if position['y'] in blocks_on_line.keys():
+			blocks_on_line[position['y']].append(position['x'])
+		else:
+			blocks_on_line[position['y']] = [position['x']]
+	
+	for line_index in blocks_on_line.keys():
+		var x_positions_on_line = blocks_on_line[line_index]
+		x_positions_on_line.sort()
+		var continuous_blocks = []
+		for x_pos in x_positions_on_line:
+			if continuous_blocks.size() == 0 or x_pos == continuous_blocks[-1] + 1:
+				continuous_blocks.append(x_pos)
+			if continuous_blocks.size() > 4:
+				for x_pos_to_destroy in continuous_blocks:
+					grid[line_index][x_pos_to_destroy].destroy()
+				continuous_blocks = []
 
 
 func create_grid():
